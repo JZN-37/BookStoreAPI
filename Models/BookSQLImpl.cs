@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -10,7 +12,7 @@ namespace BookStoreAPI.Models
     public Book AddBook(Book bookObj)
     {
 
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; // mydb is like the id of the DB that we want to use which is mentioned in the Web.config
+      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
       using (SqlConnection conn = new SqlConnection(connectionString))
       {
         SqlCommand comm = new SqlCommand();
@@ -22,7 +24,7 @@ namespace BookStoreAPI.Models
           bookStatus = 1;
         }
 
-        comm.CommandText = "insert into Book values (" + bookObj.BCatId + " , '" + bookObj.BTitle + "' , '" + bookObj.BISBN + "', '" + bookObj.BYear + "' , " + bookObj.BPrice + "  , '" + bookObj.BDesc + "' , " + bookObj.BPosition + " , " + bookObj.BCount + " , " + bookStatus + ", '" + bookObj.BImgPath + "', " + bookObj.Norders + ")";
+        comm.CommandText = "insert into Book values (" + bookObj.BCatId + " , '" + bookObj.BTitle + "' , '" + bookObj.BISBN + "', '" + "01/01/"+bookObj.BYear + "' , " + bookObj.BPrice + "  , '" + bookObj.BDesc + "' , " + bookObj.BPosition + " , " + bookObj.BCount + " , " + bookStatus + ", '" + bookObj.BImgPath + "', " + bookObj.Norders + ")";
         conn.Open();
         SqlDataReader dr = comm.ExecuteReader();
 
@@ -33,7 +35,7 @@ namespace BookStoreAPI.Models
     public Book DeleteBook(int id)
     {
       Book book = GetBookById(id);
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; // mydb is like the id of the DB that we want to use which is mentioned in the Web.config
+      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
       using (SqlConnection conn = new SqlConnection(connectionString))
       {
         SqlCommand comm = new SqlCommand();
@@ -54,8 +56,8 @@ namespace BookStoreAPI.Models
     public List<Book> GetAllBook()
     {
       List<Book> bookList = new List<Book>();
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; // mydb is like the id of the DB that we want to use which is mentioned in the Web.config
-                                                                                                 //string connectionString = @"server=DESKTOP-8VOO44R; database=BookDB;trusted_connection=yes";
+      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
+                                                                                                
       using (SqlConnection conn = new SqlConnection(connectionString))
       {
         SqlCommand comm = new SqlCommand();
@@ -89,7 +91,7 @@ namespace BookStoreAPI.Models
     public Book GetBookById(int id)
     {
       Book book = new Book();
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; // mydb is like the id of the DB that we want to use which is mentioned in the Web.config
+      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
       using (SqlConnection conn = new SqlConnection(connectionString))
       {
         SqlCommand comm = new SqlCommand();
@@ -116,15 +118,14 @@ namespace BookStoreAPI.Models
       return book;
     }
 
-
     public Book UpdateBook(int id, Book book)
     {
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; // mydb is like the id of the DB that we want to use which is mentioned in the Web.config
+      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
       using (SqlConnection conn = new SqlConnection(connectionString))
       {
         SqlCommand comm = new SqlCommand();
         comm.Connection = conn;
-        comm.CommandText = "UPDATE Book SET BCatId=" + book.BCatId + ", BTitle='" + book.BTitle + "',  BISBN='" + book.BISBN + "', BYear = '" + book.BYear + "',BPrice = " + book.BPrice + ",BDesc ='" + book.BDesc + "',BPosition ='" + book.BPosition + "', BCount='" + book.BCount + "', BStatus='" + book.BStatus + "' , BImgPath = '" + book.BImgPath + "', Norders=" + book.Norders + "    WHERE BId=" + id + "  ";
+        comm.CommandText = "UPDATE Book SET BCatId=" + book.BCatId + ", BTitle='" + book.BTitle + "',  BISBN='" + book.BISBN + "', BYear = '" + "01/01/"+book.BYear + "',BPrice = " + book.BPrice + ",BDesc ='" + book.BDesc + "',BPosition ='" + book.BPosition + "', BCount='" + book.BCount + "', BStatus='" + book.BStatus + "' , BImgPath = '" + book.BImgPath + "', Norders=" + book.Norders + "    WHERE BId=" + id + "  ";
         conn.Open();
         SqlDataReader dr = comm.ExecuteReader();
 
@@ -136,7 +137,7 @@ namespace BookStoreAPI.Models
     public Book UpdateBookCount(int id, int extraBookQty)
     {
       Book book = GetBookById(id);
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; // mydb is like the id of the DB that we want to use which is mentioned in the Web.config
+      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
       using (SqlConnection conn = new SqlConnection(connectionString))
       {
         SqlCommand comm = new SqlCommand();
@@ -147,15 +148,8 @@ namespace BookStoreAPI.Models
         comm.CommandText = "update Book Set BCount='" + book.BCount + "'  WHERE BId=" + id + "";
         conn.Open();
         SqlDataReader dr = comm.ExecuteReader();
-
-
       }
       return book;
     }
-
-
-
-
-
   }
 }

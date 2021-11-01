@@ -1,7 +1,9 @@
+using BookStoreAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 
 namespace BookStoreAPI.Controllers
 {
@@ -37,8 +39,8 @@ namespace BookStoreAPI.Controllers
       return bookSqlObj.UpdateBook(id, book);
     }
 
-    [HttpPut]
-    //https://localhost:44318/api/Book/9?extraBookQty=5
+    [HttpPut]   
+    //https://localhost:44318/api/Book/9?extraBookQty=5    
     public Book Put(int id, int extraBookQty)
     {
       //For admin to increment the total available books
