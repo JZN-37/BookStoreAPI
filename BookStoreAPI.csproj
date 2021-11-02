@@ -164,6 +164,7 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\UserAddressController.cs" />
+    <Compile Include="Controllers\UserBankDetailsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WishlistController.cs" />
@@ -186,6 +187,8 @@
     <Compile Include="Models\RatingsSQLImpl.cs" />
     <Compile Include="Models\UserAddress.cs" />
     <Compile Include="Models\UserAddressSQLImpl.cs" />
+    <Compile Include="Models\UserBankDetails.cs" />
+    <Compile Include="Models\UserBankDetailsSQLImpl.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\UsersSQLImpl.cs" />
     <Compile Include="Models\Wishlist.cs" />
