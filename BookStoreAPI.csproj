@@ -183,6 +183,9 @@
     <Compile Include="Models\OrdersSQLImpl.cs" />
     <Compile Include="Models\Ratings.cs" />
     <Compile Include="Models\RatingsSQLImpl.cs" />
+    <Compile Include="Models\UserDetailsAddress.cs" />
+    <Compile Include="Models\UserDetails.cs" />
+    <Compile Include="Models\UserDetailsBank.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\UsersSQLImpl.cs" />
     <Compile Include="Models\Wishlist.cs" />
