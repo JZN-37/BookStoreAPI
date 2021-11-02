@@ -7,11 +7,12 @@ namespace BookStoreAPI.Models
 {
     public class Users
     {
+      public int Id { get; set; }
       public string UName { get; set; }
       public string UPwd { get; set; }
       public string UMobile { get; set; }
       public string UEmail { get; set; }
-      public Boolean UStatus { get; set; }
+      public bool UStatus { get; set; }
       public int UOrderNo { get; set; }
-  }
+    }
 }

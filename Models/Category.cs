@@ -12,7 +12,7 @@ namespace BookStoreAPI.Models
         public string CatDesc { get; set; }
         public string CatImgPath { get; set; }
         public int CatCount { get; set; }
-        public Boolean CatStatus { get; set; }
+        public bool CatStatus { get; set; }
         public double CatPosition { get; set; }
         public DateTime CatCreatedAt { get; set; }
     }
