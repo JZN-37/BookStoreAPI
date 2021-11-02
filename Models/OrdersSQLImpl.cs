@@ -27,12 +27,11 @@ namespace BookStoreAPI.Models
         comm.CommandText = "exec usp_BeforeInsrtToOrders " + ordnsrtIObj.UserId + " ";
         conn.Open();
         int rows = comm.ExecuteNonQuery();
-        conn.Close();
 
 
         //For each item in the BId list we will insert into the Orders table using the stored procedure usp_InsrtOrders  @userId, @bookId, @bookQty
         //After that delete the record from Cart as it has been purchased
-        conn.Open();
+
         for(int c=0; c<ordnsrtIObj.BId.Count; c++)
         {
           comm1.CommandText = "exec usp_InsrtOrders "+ordnsrtIObj.UserId+", "+ordnsrtIObj.BId[c]+", "+ordnsrtIObj.BQty[c]+" ";
@@ -40,7 +39,6 @@ namespace BookStoreAPI.Models
           CartSQLImpl cartSqlObj = new CartSQLImpl();
           cartSqlObj.DeleteCartRecord(ordnsrtIObj.UserId, ordnsrtIObj.BId[c]);
         }
-        conn.Close();
 
 
         //Sending the Current order details of user 
@@ -83,7 +81,6 @@ namespace BookStoreAPI.Models
 
           orderList.Add(ordObj);
         }
-        conn.Close();
       }
 
       return orderList;
@@ -123,7 +120,6 @@ namespace BookStoreAPI.Models
 
           orderList.Add(ordObj);
         }
-        conn.Close();
       }
 
       return orderList;
@@ -162,7 +158,6 @@ namespace BookStoreAPI.Models
 
           orderList.Add(ordObj);
         }
-        conn.Close();
       }
 
       return orderList;

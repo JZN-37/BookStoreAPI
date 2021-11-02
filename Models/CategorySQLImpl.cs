@@ -22,10 +22,10 @@ namespace BookStoreAPI.Models
                 {
                     catStatus = 1;
                 }
-                comm.CommandText = "insert into Category values ('" + catObj.CatName + "' , '" + catObj.CatDesc + "' , '" + catObj.CatImgPath + "', " + catObj.CatCount + " , " + catStatus + "  , " + catObj.CatPosition + " , '" + DateTime.Now + "' )";
+                comm.CommandText = "insert into Category values ('" + catObj.CatName + "' , '" + catObj.CatDesc + "' , '" + catObj.CatImgPath + "', " + 0 + " , " + catStatus + "  , " + 0 + " , '" + DateTime.Now + "' )";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
+                
             }
             return catObj;
         }
@@ -41,7 +41,6 @@ namespace BookStoreAPI.Models
                 comm.CommandText = "DELETE FROM Category  WHERE CatId= " + id + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
 
             }
             return catObj;
@@ -73,7 +72,7 @@ namespace BookStoreAPI.Models
                     cat.CatCreatedAt = Convert.ToDateTime(dr["CatCreatedAt"]);
                     catList.Add(cat);
                 }
-                conn.Close();
+               
             }
             return catList;
         }
@@ -100,7 +99,7 @@ namespace BookStoreAPI.Models
                     cat.CatPosition = Convert.ToDouble(dr["CatPosition"]);
                     cat.CatCreatedAt = Convert.ToDateTime(dr["CatCreatedAt"]);
                 }
-                conn.Close();
+                
             }
             return cat;
         }
@@ -121,7 +120,7 @@ namespace BookStoreAPI.Models
                 comm.CommandText = "UPDATE Category SET CatName='" + catObj.CatName + "', CatDesc='" + catObj.CatDesc + "',  CatImgPath='" + catObj.CatImgPath + "', CatStatus = " + catStatus + " WHERE CatId=" + id + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
+                
             }
             return catObj;
         }

@@ -20,7 +20,6 @@ namespace BookStoreAPI.Models
                 comm.CommandText = "insert into Wishlist values (" + wishObj.UserId + "," + wishObj.BId + ")";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
             }
             return wishObj;
         }
@@ -36,7 +35,6 @@ namespace BookStoreAPI.Models
                 comm.CommandText = "DELETE FROM Wishlist  WHERE UserId = " + id + " and BId=" + bid + "";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
 
             }
             return wishlist;
@@ -64,7 +62,6 @@ namespace BookStoreAPI.Models
 
                     wishList.Add(wish);
                 }
-                conn.Close();
             }
             return wishList;
         }
@@ -91,7 +88,6 @@ namespace BookStoreAPI.Models
 
                     wishList.Add(wish);
                 }
-                conn.Close();
             }
             return wishList;
         }

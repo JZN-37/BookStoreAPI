@@ -21,7 +21,6 @@ namespace BookStoreAPI.Models
         conn.Open();
         //SqlDataReader dr = comm.ExecuteReader();
         int rows = comm.ExecuteNonQuery();
-        conn.Close();
       }
       return ratObj;
     }
@@ -64,7 +63,6 @@ namespace BookStoreAPI.Models
           ratObj.UserRating = Convert.ToDouble(dr["UserRating"]);
           ratList.Add(ratObj);
         }
-        conn.Close();
       }
       return ratList;
     }
@@ -107,7 +105,6 @@ namespace BookStoreAPI.Models
           ratObj.UserRating = Convert.ToDouble(dr["UserRating"]);
           ratList.Add(ratObj);
         }
-        conn.Close();
       }
       
       return ratList;
@@ -126,7 +123,6 @@ namespace BookStoreAPI.Models
         conn.Open();
         //SqlDataReader dr = comm.ExecuteReader();
         int rows = comm.ExecuteNonQuery();
-        conn.Close();
       }
       return ratObj;
     }

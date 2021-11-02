@@ -27,8 +27,6 @@ namespace BookStoreAPI.Models
         {
           password = dr["APwd"].ToString();
         }
-        conn.Close();
-
         
 
         if(password == adminObj.APwd)

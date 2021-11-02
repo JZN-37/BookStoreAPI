@@ -20,7 +20,7 @@ namespace BookStoreAPI.Models
                 comm.CommandText = "insert into Cart values ("+cartObj.UserId+","+cartObj.BId+","+cartObj.BQty+")";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
+                
             }
             return cartObj;
         }
@@ -36,7 +36,6 @@ namespace BookStoreAPI.Models
                 comm.CommandText = "DELETE FROM Cart  WHERE UserId = " + id + " and BId="+bid+"";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
 
             }
             return cartlist;
@@ -65,7 +64,7 @@ namespace BookStoreAPI.Models
 
                     cartList.Add(cart);
                 }
-                conn.Close();
+                
             }
             return cartList;
         }
@@ -93,7 +92,7 @@ namespace BookStoreAPI.Models
 
                     cartList.Add(cart);
                 }
-                conn.Close();
+                
             }
             return cartList;
         }
@@ -110,7 +109,7 @@ namespace BookStoreAPI.Models
                 comm.CommandText = "UPDATE Users SET BQty="+ cartObj.BQty+ " WHERE UserId =" + id + " and BId = " + cartObj.BId + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
+                
             }
             return cartObj;
         }

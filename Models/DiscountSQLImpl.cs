@@ -25,7 +25,7 @@ namespace BookStoreAPI.Models
                 comm.CommandText = "insert into Discount values ('" + discObj.DCouponCode + "'," + discObj.DDiscountValue + ","+ DStatus + ")";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
+                
             }
             return discObj;
         }
@@ -41,7 +41,6 @@ namespace BookStoreAPI.Models
                 comm.CommandText = "DELETE FROM Discount  WHERE DId = " + id + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
 
             }
             return wishlist;
@@ -70,7 +69,6 @@ namespace BookStoreAPI.Models
 
                     discList.Add(disc);
                 }
-                conn.Close();
             }
             return discList;
         }
@@ -95,7 +93,6 @@ namespace BookStoreAPI.Models
                     disc.DStatus = Convert.ToBoolean(dr["DStatus"]);
 
                 }
-                conn.Close();
             }
             return disc;
         }
@@ -117,7 +114,6 @@ namespace BookStoreAPI.Models
                 comm.CommandText = "UPDATE Discount SET DCouponCode= '" + discObj.DCouponCode + "', DDiscountValue = "+ discObj.DDiscountValue + ", DStatus = "+ DStatus + " WHERE DId =" + id + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
-                conn.Close();
             }
             return discObj;
         }
