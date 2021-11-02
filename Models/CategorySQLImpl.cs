@@ -37,7 +37,7 @@ namespace BookStoreAPI.Models
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "DELETE FROM Category  WHERE id= " + id + " ";
+                comm.CommandText = "DELETE FROM Category  WHERE CatId= " + id + " ";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
 
