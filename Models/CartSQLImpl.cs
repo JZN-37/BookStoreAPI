@@ -7,9 +7,9 @@ using System.Web;
 
 namespace BookStoreAPI.Models
 {
-    public class UsersSQLImpl
+    public class CartSQLImpl
     {
-        public Users AddUser(Users usrObj)
+        public Cart AddCart(Cart cartObj)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -17,112 +17,102 @@ namespace BookStoreAPI.Models
                 SqlCommand comm = new SqlCommand();
                 
                 comm.Connection = conn;
-                int UStatus = 0;
-                if (usrObj.UStatus == true)
-                {
-                    UStatus = 1;
-                }
-                comm.CommandText = "insert into Users values ('" + usrObj.UName + "' , '" + usrObj.UPwd + "' , '" + usrObj.UMobile + "', '" + usrObj.UEmail + "' , " + UStatus + "  , " + usrObj.UOrderNo + "  )";
+                comm.CommandText = "insert into Cart values ("+cartObj.UserId+","+cartObj.BId+","+cartObj.BQty+")";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
                 conn.Close();
             }
-            return usrObj;
+            return cartObj;
         }
 
-        public Users DeleteUser(int id)
+        public List<Cart> DeleteUser(int id, int bid)
         {
-            Users usrObj = GetUsrById(id);
+            List<Cart> cartlist = GetCartById(id);
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "DELETE FROM Users  WHERE Id= " + id + " ";
+                comm.CommandText = "DELETE FROM Cart  WHERE UserId = " + id + " and BId="+bid+"";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
                 conn.Close();
 
             }
-            return usrObj;
+            return cartlist;
         }
 
-        public List<Users> GetAllUsers()
+        public List<Cart> GetAllCart()
         {
-            List<Users> usrList = new List<Users>();
+            List<Cart> cartList = new List<Cart>();
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select * from Users";
+                comm.CommandText = "select * from Cart";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read())
                 {
-                    Users usr = new Users();
+                    Cart cart = new Cart();
 
-                    usr.Id = Convert.ToInt32(dr["Id"]);
-                    usr.UName = dr["UName"].ToString();
-                    usr.UPwd = dr["UPwd"].ToString();
-                    usr.UMobile = dr["UMobile"].ToString();
-                    usr.UEmail = dr["UEmail"].ToString();
-                    usr.UStatus = Convert.ToBoolean(dr["UStatus"]);
-                    usr.UOrderNo = Convert.ToInt32(dr["UOrderNo"]);
+                    cart.CartId = Convert.ToInt32(dr["CartId"]);
+                    cart.UserId = Convert.ToInt32(dr["UserId"]);
+                    cart.BId = Convert.ToInt32(dr["BId"]);
+                    cart.BQty = Convert.ToInt32(dr["BQty"]);
 
-                    usrList.Add(usr);
+                    cartList.Add(cart);
                 }
                 conn.Close();
             }
-            return usrList;
+            return cartList;
         }
 
-        public Users GetUsrById(int id)
+        public List<Cart> GetCartById(int id)
         {
-            Users usr = new Users();
+            List<Cart> cartList = new List<Cart>();
+            
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select * from Users where Id =" + id + " ";
+                comm.CommandText = "select * from Cart where UserId =" + id + " ";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read())
                 {
-                    usr.Id = Convert.ToInt32(dr["Id"]);
-                    usr.UName = dr["UName"].ToString();
-                    usr.UPwd = dr["UPwd"].ToString();
-                    usr.UMobile = dr["UMobile"].ToString();
-                    usr.UEmail = dr["UEmail"].ToString();
-                    usr.UStatus = Convert.ToBoolean(dr["UStatus"]);
-                    usr.UOrderNo = Convert.ToInt32(dr["UOrderNo"]);
+                    Cart cart = new Cart();
+
+                    cart.CartId = Convert.ToInt32(dr["CartId"]);
+                    cart.UserId = Convert.ToInt32(dr["UserId"]);
+                    cart.BId = Convert.ToInt32(dr["BId"]);
+                    cart.BQty = Convert.ToInt32(dr["BQty"]);
+
+                    cartList.Add(cart);
                 }
                 conn.Close();
             }
-            return usr;
+            return cartList;
         }
 
 
-        public Users UpdateUsr(int id, Users usrObj)
+        public Cart UpdateCart(Cart cartObj)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                int UStatus = 0;
-                if (usrObj.UStatus == true)
-                {
-                    UStatus = 1;
-                }
-                comm.CommandText = "UPDATE Users SET UName='" + usrObj.UName + "', UPwd='" + usrObj.UPwd + "',  UMobile='" + usrObj.UMobile + "', UEmail= '"+ usrObj.UEmail + "' , UStatus = " + UStatus + ", UOrderNo = " + usrObj.UOrderNo + " WHERE Id=" + id + " ";
+                
+                comm.CommandText = "UPDATE Users SET BQty="+ cartObj.BQty+ " WHERE UserId =" + cartObj.UserId + " and BId = " + cartObj.BId + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
                 conn.Close();
             }
-            return usrObj;
+            return cartObj;
         }
     }
 }
