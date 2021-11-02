@@ -99,7 +99,7 @@ namespace BookStoreAPI.Models
         }
 
 
-        public Cart UpdateCart(Cart cartObj)
+        public Cart UpdateCart(int id,Cart cartObj)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -107,7 +107,7 @@ namespace BookStoreAPI.Models
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
                 
-                comm.CommandText = "UPDATE Users SET BQty="+ cartObj.BQty+ " WHERE UserId =" + cartObj.UserId + " and BId = " + cartObj.BId + " ";
+                comm.CommandText = "UPDATE Users SET BQty="+ cartObj.BQty+ " WHERE UserId =" + id + " and BId = " + cartObj.BId + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
                 conn.Close();
