@@ -24,7 +24,8 @@ namespace BookStoreAPI.Models
                 }
                 comm.CommandText = "insert into Category values ('" + catObj.CatName + "' , '" + catObj.CatDesc + "' , '" + catObj.CatImgPath + "', " + catObj.CatCount + " , " + catStatus + "  , " + catObj.CatPosition + " , '" + DateTime.Now + "' )";
                 conn.Open();
-                SqlDataReader dr = comm.ExecuteReader();
+                int rows = comm.ExecuteNonQuery();
+                conn.Close();
             }
             return catObj;
         }
@@ -39,8 +40,8 @@ namespace BookStoreAPI.Models
                 comm.Connection = conn;
                 comm.CommandText = "DELETE FROM Category  WHERE CatId= " + id + " ";
                 conn.Open();
-                SqlDataReader dr = comm.ExecuteReader();
-
+                int rows = comm.ExecuteNonQuery();
+                conn.Close();
 
             }
             return catObj;
@@ -72,6 +73,7 @@ namespace BookStoreAPI.Models
                     cat.CatCreatedAt = Convert.ToDateTime(dr["CatCreatedAt"]);
                     catList.Add(cat);
                 }
+                conn.Close();
             }
             return catList;
         }
@@ -98,6 +100,7 @@ namespace BookStoreAPI.Models
                     cat.CatPosition = Convert.ToDouble(dr["CatPosition"]);
                     cat.CatCreatedAt = Convert.ToDateTime(dr["CatCreatedAt"]);
                 }
+                conn.Close();
             }
             return cat;
         }
@@ -117,7 +120,8 @@ namespace BookStoreAPI.Models
                 }
                 comm.CommandText = "UPDATE Category SET CatName='" + catObj.CatName + "', CatDesc='" + catObj.CatDesc + "',  CatImgPath='" + catObj.CatImgPath + "', CatStatus = " + catStatus + " WHERE CatId=" + id + " ";
                 conn.Open();
-                SqlDataReader dr = comm.ExecuteReader();
+                int rows = comm.ExecuteNonQuery();
+                conn.Close();
             }
             return catObj;
         }

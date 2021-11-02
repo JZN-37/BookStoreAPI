@@ -24,7 +24,8 @@ namespace BookStoreAPI.Models
                 }
                 comm.CommandText = "insert into Users values ('" + usrObj.UName + "' , '" + usrObj.UPwd + "' , '" + usrObj.UMobile + "', '" + usrObj.UEmail + "' , " + UStatus + "  , " + usrObj.UOrderNo + "  )";
                 conn.Open();
-                SqlDataReader dr = comm.ExecuteReader();
+                int rows = comm.ExecuteNonQuery();
+                conn.Close();
             }
             return usrObj;
         }
@@ -39,8 +40,8 @@ namespace BookStoreAPI.Models
                 comm.Connection = conn;
                 comm.CommandText = "DELETE FROM Users  WHERE Id= " + id + " ";
                 conn.Open();
-                SqlDataReader dr = comm.ExecuteReader();
-
+                int rows = comm.ExecuteNonQuery();
+                conn.Close();
 
             }
             return usrObj;
@@ -72,6 +73,7 @@ namespace BookStoreAPI.Models
 
                     usrList.Add(usr);
                 }
+                conn.Close();
             }
             return usrList;
         }
@@ -97,6 +99,7 @@ namespace BookStoreAPI.Models
                     usr.UStatus = Convert.ToBoolean(dr["UStatus"]);
                     usr.UOrderNo = Convert.ToInt32(dr["UOrderNo"]);
                 }
+                conn.Close();
             }
             return usr;
         }
@@ -116,7 +119,8 @@ namespace BookStoreAPI.Models
                 }
                 comm.CommandText = "UPDATE Category SET UName='" + usrObj.UName + "', UPwd='" + usrObj.UPwd + "',  UMobile='" + usrObj.UMobile + "', UEmail= '"+ usrObj.UEmail + "' , UStatus = " + UStatus + ", UOrderNo = " + usrObj.UOrderNo + " WHERE Id=" + id + " ";
                 conn.Open();
-                SqlDataReader dr = comm.ExecuteReader(); 
+                int rows = comm.ExecuteNonQuery();
+                conn.Close();
             }
             return usrObj;
         }
