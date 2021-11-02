@@ -156,6 +156,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
@@ -166,6 +167,8 @@
     </Compile>
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookSQLImpl.cs" />
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartSQLImpl.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategorySQLImpl.cs" />
     <Compile Include="Models\Ratings.cs" />
