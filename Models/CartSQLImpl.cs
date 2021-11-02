@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -25,7 +25,7 @@ namespace BookStoreAPI.Models
             return cartObj;
         }
 
-        public List<Cart> DeleteUser(int id, int bid)
+        public List<Cart> DeleteCartRecord(int id, int bid)
         {
             List<Cart> cartlist = GetCartById(id);
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;

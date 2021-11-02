@@ -21,6 +21,7 @@ namespace BookStoreAPI.Models
         comm.Connection = conn;
         comm1.Connection = conn;
 
+
         //First increment the UOrderNo of the current user to get the latest order id for current user
         //To do this we call the stored procedure usp_BeforeInsrtToOrders with current user's userid
         comm.CommandText = "exec usp_BeforeInsrtToOrders " + ordnsrtIObj.UserId + " ";
@@ -28,12 +29,16 @@ namespace BookStoreAPI.Models
         int rows = comm.ExecuteNonQuery();
         conn.Close();
 
+
         //For each item in the BId list we will insert into the Orders table using the stored procedure usp_InsrtOrders  @userId, @bookId, @bookQty
+        //After that delete the record from Cart as it has been purchased
         conn.Open();
         for(int c=0; c<ordnsrtIObj.BId.Count; c++)
         {
           comm1.CommandText = "exec usp_InsrtOrders "+ordnsrtIObj.UserId+", "+ordnsrtIObj.BId[c]+", "+ordnsrtIObj.BQty[c]+" ";
           comm1.ExecuteNonQuery();
+          CartSQLImpl cartSqlObj = new CartSQLImpl();
+          cartSqlObj.DeleteCartRecord(ordnsrtIObj.UserId, ordnsrtIObj.BId[c]);
         }
         conn.Close();
 
