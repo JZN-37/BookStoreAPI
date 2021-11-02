@@ -44,7 +44,7 @@ namespace BookStoreAPI.Controllers
         [HttpDelete]
         public List<Cart> Delete(int id,int bid)
         {
-            return cartSqlObj.DeleteUser(id,bid);
+            return cartSqlObj.DeleteCartRecord(id,bid);
         }
     }
 }

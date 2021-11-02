@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -7,112 +7,119 @@ using System.Web;
 
 namespace BookStoreAPI.Models
 {
-    public class CartSQLImpl
+    public class DiscountSQLImpl
     {
-        public Cart AddCart(Cart cartObj)
+        public Discount AddDisc(Discount discObj)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                int DStatus = 0;
+                if (discObj.DStatus == true)
+                {
+                    DStatus = 1;
+                }
                 SqlCommand comm = new SqlCommand();
-                
+
                 comm.Connection = conn;
-                comm.CommandText = "insert into Cart values ("+cartObj.UserId+","+cartObj.BId+","+cartObj.BQty+")";
+                comm.CommandText = "insert into Discount values ('" + discObj.DCouponCode + "'," + discObj.DDiscountValue + ","+ DStatus + ")";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
                 conn.Close();
             }
-            return cartObj;
+            return discObj;
         }
 
-        public List<Cart> DeleteCartRecord(int id, int bid) 
+        public Discount DeleteDisc(int id)
         {
-            List<Cart> cartlist = GetCartById(id);
+            Discount wishlist = GetDiscById(id);
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "DELETE FROM Cart  WHERE UserId = " + id + " and BId="+bid+"";
+                comm.CommandText = "DELETE FROM Discount  WHERE DId = " + id + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
                 conn.Close();
 
             }
-            return cartlist;
+            return wishlist;
         }
 
-        public List<Cart> GetAllCart()
+        public List<Discount> GetAllDisc()
         {
-            List<Cart> cartList = new List<Cart>();
+            List<Discount> discList = new List<Discount>();
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select * from Cart";
+                comm.CommandText = "select * from Discount";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read())
                 {
-                    Cart cart = new Cart();
+                    Discount disc = new Discount();
 
-                    cart.CartId = Convert.ToInt32(dr["CartId"]);
-                    cart.UserId = Convert.ToInt32(dr["UserId"]);
-                    cart.BId = Convert.ToInt32(dr["BId"]);
-                    cart.BQty = Convert.ToInt32(dr["BQty"]);
+                    disc.DId = Convert.ToInt32(dr["DId"]);
+                    disc.DCouponCode = (dr["DCouponCode"]).ToString();
+                    disc.DDiscountValue = Convert.ToDouble(dr["DDiscountValue"]);
+                    disc.DStatus = Convert.ToBoolean(dr["DStatus"]);
 
-                    cartList.Add(cart);
+                    discList.Add(disc);
                 }
                 conn.Close();
             }
-            return cartList;
+            return discList;
         }
 
-        public List<Cart> GetCartById(int id)
+        public Discount GetDiscById(int id)
         {
-            List<Cart> cartList = new List<Cart>();
-            
+            Discount disc = new Discount();
+
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select * from Cart where UserId =" + id + " ";
+                comm.CommandText = "select * from Discount where DId =" + id + " ";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read())
                 {
-                    Cart cart = new Cart();
+                    disc.DId = Convert.ToInt32(dr["DId"]);
+                    disc.DCouponCode = (dr["DCouponCode"]).ToString();
+                    disc.DDiscountValue = Convert.ToDouble(dr["DDiscountValue"]);
+                    disc.DStatus = Convert.ToBoolean(dr["DStatus"]);
 
-                    cart.CartId = Convert.ToInt32(dr["CartId"]);
-                    cart.UserId = Convert.ToInt32(dr["UserId"]);
-                    cart.BId = Convert.ToInt32(dr["BId"]);
-                    cart.BQty = Convert.ToInt32(dr["BQty"]);
-
-                    cartList.Add(cart);
                 }
                 conn.Close();
             }
-            return cartList;
+            return disc;
         }
 
 
-        public Cart UpdateCart(int id,Cart cartObj)
+        public Discount UpdateDisc(int id, Discount discObj)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                int DStatus = 0;
+                if (discObj.DStatus == true)
+                {
+                    DStatus = 1;
+                }
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                
-                comm.CommandText = "UPDATE Users SET BQty="+ cartObj.BQty+ " WHERE UserId =" + id + " and BId = " + cartObj.BId + " ";
+
+                comm.CommandText = "UPDATE Discount SET DCouponCode= '" + discObj.DCouponCode + "', DDiscountValue = "+ discObj.DDiscountValue + ", DStatus = "+ DStatus + " WHERE DId =" + id + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
                 conn.Close();
             }
-            return cartObj;
+            return discObj;
         }
     }
 }

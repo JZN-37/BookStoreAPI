@@ -158,11 +158,13 @@
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\DiscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\WishlistController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -172,12 +174,16 @@
     <Compile Include="Models\CartSQLImpl.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategorySQLImpl.cs" />
+    <Compile Include="Models\Discount.cs" />
+    <Compile Include="Models\DiscountSQLImpl.cs" />
     <Compile Include="Models\Orders.cs" />
     <Compile Include="Models\OrdersSQLImpl.cs" />
     <Compile Include="Models\Ratings.cs" />
     <Compile Include="Models\RatingsSQLImpl.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\UsersSQLImpl.cs" />
+    <Compile Include="Models\Wishlist.cs" />
+    <Compile Include="Models\WishlistSQLImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
