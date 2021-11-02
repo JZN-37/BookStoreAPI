@@ -26,7 +26,9 @@ namespace BookStoreAPI.Models
 
         comm.CommandText = "insert into Book values (" + bookObj.BCatId + " , '" + bookObj.BTitle + "' , '" + bookObj.BISBN + "', '" + "01/01/"+bookObj.BYear + "' , " + bookObj.BPrice + "  , '" + bookObj.BDesc + "' , " + bookObj.BPosition + " , " + bookObj.BCount + " , " + bookStatus + ", '" + bookObj.BImgPath + "', " + bookObj.Norders + ")";
         conn.Open();
-        SqlDataReader dr = comm.ExecuteReader();
+        //SqlDataReader dr = comm.ExecuteReader();
+        int rows = comm.ExecuteNonQuery();
+        conn.Close();
 
       }
       return bookObj;
@@ -45,10 +47,13 @@ namespace BookStoreAPI.Models
         comm.CommandText = "DELETE FROM Book  WHERE BId= " + id + " ";
         comm1.CommandText = "exec usp_IDelBk '" + book.BCatId + "' , '" + book.BStatus + "' ";
         conn.Open();
-        SqlDataReader dr = comm.ExecuteReader();
+        //SqlDataReader dr = comm.ExecuteReader();
+        int rows = comm.ExecuteNonQuery();
         conn.Close();
         conn.Open();
-        SqlDataReader dr1 = comm1.ExecuteReader();
+        //SqlDataReader dr1 = comm1.ExecuteReader();
+        rows = comm1.ExecuteNonQuery();
+        conn.Close();
       }
       return book;
     }
@@ -127,8 +132,9 @@ namespace BookStoreAPI.Models
         comm.Connection = conn;
         comm.CommandText = "UPDATE Book SET BCatId=" + book.BCatId + ", BTitle='" + book.BTitle + "',  BISBN='" + book.BISBN + "', BYear = '" + "01/01/"+book.BYear + "',BPrice = " + book.BPrice + ",BDesc ='" + book.BDesc + "',BPosition ='" + book.BPosition + "', BCount='" + book.BCount + "', BStatus='" + book.BStatus + "' , BImgPath = '" + book.BImgPath + "', Norders=" + book.Norders + "    WHERE BId=" + id + "  ";
         conn.Open();
-        SqlDataReader dr = comm.ExecuteReader();
-
+        //SqlDataReader dr = comm.ExecuteReader();
+        int rows = comm.ExecuteNonQuery();
+        conn.Close();
 
       }
       return book;
@@ -147,7 +153,9 @@ namespace BookStoreAPI.Models
         //comm.CommandText = "UPDATE Book SET BCatId=" + book.BCatId + ", BTitle='" + book.BTitle + "',  BISBN='" + book.BISBN + "', BYear = '" + book.BYear + "',BPrice = " + book.BPrice + ",BDesc ='" + book.BDesc + "',BPosition ='" + book.BPosition + "', BCount='" + book.BCount + "', BStatus='" + book.BStatus + "' , BImgPath = '" + book.BImgPath + "', Norders=" + book.Norders + "    WHERE BId=" + book.BId + "  ";
         comm.CommandText = "update Book Set BCount='" + book.BCount + "'  WHERE BId=" + id + "";
         conn.Open();
-        SqlDataReader dr = comm.ExecuteReader();
+        //SqlDataReader dr = comm.ExecuteReader();
+        int rows = comm.ExecuteNonQuery();
+        conn.Close();
       }
       return book;
     }
