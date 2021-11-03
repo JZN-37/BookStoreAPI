@@ -161,6 +161,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\DiscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\UserAddressController.cs" />

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -118,5 +118,37 @@ namespace BookStoreAPI.Models
             }
             return usrObj;
         }
-    }
+
+        public bool CheckUserLogIn(UsersLogIn userObj)
+        {
+          bool logInStatus = false;
+          string password = "";
+          string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+          using (SqlConnection conn = new SqlConnection(connectionString))
+          {
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+
+            comm.CommandText = "select * from Users where UName = '" + userObj.UName + "' ";
+            conn.Open();
+            SqlDataReader dr = comm.ExecuteReader();
+
+            while (dr.Read())
+            {
+              password = dr["UPwd"].ToString();
+            }
+
+
+            if (password == userObj.UPwd)
+            {
+              logInStatus = true;
+            }
+
+          }
+          return logInStatus;
+        }
+
+
+
+  }
 }

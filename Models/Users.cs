@@ -5,6 +5,11 @@ using System.Web;
 
 namespace BookStoreAPI.Models
 {
+      public class UsersLogIn
+    {
+      public string UName { get; set; }
+      public string UPwd { get; set; }
+    }
     public class Users
     {
       public int Id { get; set; }

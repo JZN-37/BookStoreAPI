@@ -1,4 +1,4 @@
-﻿using BookStoreAPI.Models;
+using BookStoreAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace BookStoreAPI.Controllers
         {
             usersSqlObj = new UsersSQLImpl();
         }
-
+        
         [HttpGet]
         public List<Users> Get()
         {
