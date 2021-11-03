@@ -25,8 +25,10 @@ namespace BookStoreAPI.Models
             return cartObj;
         }
 
+        //http://localhost:60494/api/Cart/1?bid=2
         public List<Cart> DeleteCartRecord(int id, int bid) 
         {
+            
             List<Cart> cartlist = GetCartById(id);
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -106,7 +108,7 @@ namespace BookStoreAPI.Models
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
                 
-                comm.CommandText = "UPDATE Users SET BQty="+ cartObj.BQty+ " WHERE UserId =" + id + " and BId = " + cartObj.BId + " ";
+                comm.CommandText = "UPDATE Cart SET BQty="+ cartObj.BQty+ " WHERE UserId =" + id + " and BId = " + cartObj.BId + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
                 
