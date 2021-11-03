@@ -25,6 +25,7 @@ namespace BookStoreAPI.Models
             return addrObj;
         }
 
+        //http://localhost:60494/api/UserAddress?uid=2&addrid=3
         public List<UserAddress> DeleteAddr(int uid,int addrid)
         {
             List<UserAddress> addrlist = GetAddrById(uid);

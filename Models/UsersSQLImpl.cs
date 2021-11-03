@@ -22,7 +22,7 @@ namespace BookStoreAPI.Models
                 {
                     UStatus = 1;
                 }
-                comm.CommandText = "insert into Users values ('" + usrObj.UName + "' , '" + usrObj.UPwd + "' , '" + usrObj.UMobile + "', '" + usrObj.UEmail + "' , " + UStatus + "  , " + usrObj.UOrderNo + "  )";
+                comm.CommandText = "insert into Users values ('" + usrObj.UName + "' , '" + usrObj.UPwd + "' , '" + usrObj.UMobile + "', '" + usrObj.UEmail + "' , " + UStatus + "  , " + 0 + "  )";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
             }
@@ -112,7 +112,7 @@ namespace BookStoreAPI.Models
                 {
                     UStatus = 1;
                 }
-                comm.CommandText = "UPDATE Users SET UName='" + usrObj.UName + "', UPwd='" + usrObj.UPwd + "',  UMobile='" + usrObj.UMobile + "', UEmail= '"+ usrObj.UEmail + "' , UStatus = " + UStatus + ", UOrderNo = " + usrObj.UOrderNo + " WHERE Id=" + id + " ";
+                comm.CommandText = "UPDATE Users SET UName='" + usrObj.UName + "', UPwd='" + usrObj.UPwd + "',  UMobile='" + usrObj.UMobile + "', UEmail= '"+ usrObj.UEmail + "' , UStatus = " + UStatus + " WHERE Id=" + id + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
             }
