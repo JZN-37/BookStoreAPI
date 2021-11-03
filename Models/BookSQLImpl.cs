@@ -23,8 +23,8 @@ namespace BookStoreAPI.Models
         {
           bookStatus = 1;
         }
-        //string YeartoDate = "01/01/" + bookObj.BYear;
-        comm.CommandText = "insert into Book values (" + bookObj.BCatId + " , '" + bookObj.BTitle + "' , '" + bookObj.BISBN + "', '"+ bookObj.BYear + "' , " + bookObj.BPrice + "  , '" + bookObj.BDesc + "' , " + 0 + " , " + bookObj.BCount + " , " + bookStatus + ", '" + bookObj.BImgPath + "', " + 0 + ")";
+        DateTime YeartoDate = DateTime.Parse("01/01/" + bookObj.BYear);
+        comm.CommandText = "insert into Book values (" + bookObj.BCatId + " , '" + bookObj.BTitle + "' , '" + bookObj.BISBN + "', '"+ YeartoDate + "' , " + bookObj.BPrice + "  , '" + bookObj.BDesc + "' , " + 0 + " , " + bookObj.BCount + " , " + bookStatus + ", '" + bookObj.BImgPath + "', " + 0 + ")";
         conn.Open();
         //SqlDataReader dr = comm.ExecuteReader();
         int rows = comm.ExecuteNonQuery();
@@ -77,7 +77,7 @@ namespace BookStoreAPI.Models
           book.BCatId = Convert.ToInt32(dr["BCatId"]);
           book.BTitle = dr["BTitle"].ToString();
           book.BISBN = dr["BISBN"].ToString();
-          book.BYear = Convert.ToDateTime(dr["BYear"]);
+          book.BYear = dr["BYear"].ToString();
           book.BPrice = Convert.ToDouble(dr["BPrice"]);
           book.BDesc = dr["BDesc"].ToString();
           book.BPosition = Convert.ToDouble(dr["BPosition"]);
@@ -109,7 +109,7 @@ namespace BookStoreAPI.Models
           book.BCatId = Convert.ToInt32(dr["BCatId"]);
           book.BTitle = dr["BTitle"].ToString();
           book.BISBN = dr["BISBN"].ToString();
-          book.BYear = Convert.ToDateTime(dr["BYear"]);
+          book.BYear = dr["BYear"].ToString();
           book.BPrice = Convert.ToDouble(dr["BPrice"]);
           book.BDesc = dr["BDesc"].ToString();
           book.BPosition = Convert.ToDouble(dr["BPosition"]);
@@ -129,6 +129,7 @@ namespace BookStoreAPI.Models
       {
         SqlCommand comm = new SqlCommand();
         comm.Connection = conn;
+        DateTime YeartoDate = DateTime.Parse("01/01/" + book.BYear);
         comm.CommandText = "UPDATE Book SET BCatId=" + book.BCatId + ", BTitle='" + book.BTitle + "',  BISBN='" + book.BISBN + "', BYear = '" +book.BYear + "',BPrice = " + book.BPrice + ",BDesc ='" + book.BDesc + "', BCount='" + book.BCount + "', BStatus='" + book.BStatus + "' , BImgPath = '" + book.BImgPath + "'   WHERE BId=" + id + "  ";
         conn.Open();
         int rows = comm.ExecuteNonQuery();        
