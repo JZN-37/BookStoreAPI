@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace BookStoreAPI.Controllers
 {
-  public class OrdersController : ApiController
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    public class OrdersController : ApiController
   {
     private OrdersSQLImpl orderSqlObj;
     public OrdersController()
