@@ -11,7 +11,7 @@ namespace BookStoreAPI.Models
     public int BCatId { get; set; }
     public string BTitle { get; set; }
     public string BISBN { get; set; }
-    public string BYear { get; set; }
+    public string BYear { get; set; }    
     public double BPrice { get; set; }
     public string BDesc { get; set; }
     public double BPosition { get; set; }
