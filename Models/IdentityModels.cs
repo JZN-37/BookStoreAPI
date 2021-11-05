@@ -10,7 +10,9 @@ namespace BookStoreAPI.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public int UserID { get; set; }
+        //Add UserID From SqlServer as Identity
+        // ALTER TABLE [User] ADD UserID int identity
+
         public bool UStatus { get; set; }
     }
 
