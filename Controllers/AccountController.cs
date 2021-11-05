@@ -40,7 +40,7 @@ namespace BookStoreAPI.Controllers
                 {
                     SqlCommand comm = new SqlCommand();
                     comm.Connection = conn;
-                    comm.CommandText = "SELECT TOP(1)[UserID] FROM [User] ORDER BY [UserID] DESC";
+                    comm.CommandText = "select [UserID] from [User] where UserName = '"+model.UName+"'";
                     conn.Open();
                     SqlDataReader dr = comm.ExecuteReader();
                     while (dr.Read())
