@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 
 namespace BookStoreAPI.Models
@@ -22,9 +23,12 @@ namespace BookStoreAPI.Models
                 {
                     UStatus = 1;
                 }
-                comm.CommandText = "insert into Users values ('" + usrObj.UName + "' , '" + usrObj.UPwd + "' , '" + usrObj.UMobile + "', '" + usrObj.UEmail + "' , " + UStatus + "  , " + 0 + "  )";
+                comm.CommandText = "insert into Users values ("+ usrObj.Id + ",'" + usrObj.UName + "' , '" + usrObj.UPwd + "' , '" + usrObj.UMobile + "', '" + usrObj.UEmail + "' , " + UStatus + "  , " + 0 + "  )";
                 conn.Open();
+                
                 int rows = comm.ExecuteNonQuery();
+                               
+                
             }
             return usrObj;
         }
