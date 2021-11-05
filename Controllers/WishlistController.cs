@@ -1,4 +1,4 @@
-﻿using BookStoreAPI.Models;
+using BookStoreAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +19,14 @@ namespace BookStoreAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public List<Wishlist> Get()
         {
             return wishSqlObj.GetAllWish();
         }
 
         [HttpGet]
+        [Authorize]
         public List<Wishlist> Get(int id)
         {
             return wishSqlObj.GetWishById(id);

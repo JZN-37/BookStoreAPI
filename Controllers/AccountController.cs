@@ -1,4 +1,4 @@
-﻿using BookStoreAPI.Models;
+using BookStoreAPI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -32,6 +32,7 @@ namespace BookStoreAPI.Controllers
             newuser.UStatus = true;
 
             IdentityResult result = manager.Create(user, model.UPwd);
+            manager.AddToRoles(user.Id, model.Roles);
             if (result.Succeeded == true)
             {
                 string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -53,4 +54,9 @@ namespace BookStoreAPI.Controllers
             return result;
         }
     }
+
+
+  
+
+
 }
