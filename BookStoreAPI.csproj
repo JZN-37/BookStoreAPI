@@ -54,15 +54,24 @@
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -164,6 +173,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -181,6 +191,32 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111050510433_InitialDB.cs" />
+    <Compile Include="Migrations\202111050510433_InitialDB.Designer.cs">
+      <DependentUpon>202111050510433_InitialDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111050525384_ChangedDefaultTableNames.cs" />
+    <Compile Include="Migrations\202111050525384_ChangedDefaultTableNames.Designer.cs">
+      <DependentUpon>202111050525384_ChangedDefaultTableNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111050545279_ChangedDefaultColumnNames.cs" />
+    <Compile Include="Migrations\202111050545279_ChangedDefaultColumnNames.Designer.cs">
+      <DependentUpon>202111050545279_ChangedDefaultColumnNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111050644515_addedUserID.cs" />
+    <Compile Include="Migrations\202111050644515_addedUserID.Designer.cs">
+      <DependentUpon>202111050644515_addedUserID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111050653063_addedUserIDIdentity.cs" />
+    <Compile Include="Migrations\202111050653063_addedUserIDIdentity.Designer.cs">
+      <DependentUpon>202111050653063_addedUserIDIdentity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111050659270_removedUserIDIdentity.cs" />
+    <Compile Include="Migrations\202111050659270_removedUserIDIdentity.Designer.cs">
+      <DependentUpon>202111050659270_removedUserIDIdentity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\AdminSQLImpl.cs" />
     <Compile Include="Models\Book.cs" />
@@ -191,6 +227,7 @@
     <Compile Include="Models\CategorySQLImpl.cs" />
     <Compile Include="Models\Discount.cs" />
     <Compile Include="Models\DiscountSQLImpl.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Orders.cs" />
     <Compile Include="Models\OrdersSQLImpl.cs" />
     <Compile Include="Models\Ratings.cs" />
@@ -287,6 +324,26 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202111050510433_InitialDB.resx">
+      <DependentUpon>202111050510433_InitialDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111050525384_ChangedDefaultTableNames.resx">
+      <DependentUpon>202111050525384_ChangedDefaultTableNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111050545279_ChangedDefaultColumnNames.resx">
+      <DependentUpon>202111050545279_ChangedDefaultColumnNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111050644515_addedUserID.resx">
+      <DependentUpon>202111050644515_addedUserID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111050653063_addedUserIDIdentity.resx">
+      <DependentUpon>202111050653063_addedUserIDIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111050659270_removedUserIDIdentity.resx">
+      <DependentUpon>202111050659270_removedUserIDIdentity.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
