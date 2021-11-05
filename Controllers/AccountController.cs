@@ -32,9 +32,10 @@ namespace BookStoreAPI.Controllers
             newuser.UStatus = true;
 
             IdentityResult result = manager.Create(user, model.UPwd);
-            manager.AddToRoles(user.Id, model.Roles);
+            
             if (result.Succeeded == true)
             {
+                manager.AddToRoles(user.Id, model.Roles);
                 string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
