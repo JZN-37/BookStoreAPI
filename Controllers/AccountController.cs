@@ -54,6 +54,21 @@ namespace BookStoreAPI.Controllers
             }
             return result;
         }
+
+    [Route("api/User/PasswordChange")]
+    [HttpPost]
+    public IdentityResult ChangePassword(PasswordChange model)
+        {
+          var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+          var manager = new UserManager<ApplicationUser>(userStore);
+
+          var user = manager.FindByName(model.UName);
+          IdentityResult result = manager.ChangePassword(user.Id, model.OldPass, model.NewPass);
+
+          return result;
+        }
+
+
     }
 
 }

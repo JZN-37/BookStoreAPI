@@ -78,3 +78,4 @@ select * from Orders where UserId = 1
 
 --Add UserID column with identity to User table of UserDB
 --alter table [User] add UserID int identity
+
