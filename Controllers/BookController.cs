@@ -17,13 +17,13 @@ namespace BookStoreAPI.Controllers
       BookSQLImpl bookSqlObj = new BookSQLImpl();
     }
     [HttpGet]
-    public List<Book> Get()
+    public List<BookWithCatName> Get()
     {
       return bookSqlObj.GetAllBook();
     }
 
     [HttpGet]
-    public Book Get(int id)
+    public BookWithCatName Get(int id)
     {
       return bookSqlObj.GetBookById(id);
     }
@@ -41,17 +41,17 @@ namespace BookStoreAPI.Controllers
       return bookSqlObj.UpdateBook(id, book);
     }
 
-    [HttpPut]   
+    /*[HttpPut]   
     //https://localhost:44318/api/Book/9?extraBookQty=5    
     public Book Put(int id, int extraBookQty)
     {
       //For admin to increment the total available books
       return bookSqlObj.UpdateBookCount(id, extraBookQty);
-    }
+    }*/
 
 
     [HttpDelete]
-    public Book Delete(int id)
+    public bool Delete(int id)
     {
       return bookSqlObj.DeleteBook(id);
     }

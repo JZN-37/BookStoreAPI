@@ -105,6 +105,24 @@ namespace BookStoreAPI.Models
             return usr;
         }
 
+        public int GetUIdByUName(string userName)
+        {
+          int userId = 0;
+          string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+          using (SqlConnection conn = new SqlConnection(connectionString))
+          {
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = conn;
+            comm.CommandText = "select * from Users where UName ='" + userName + "' ";
+            conn.Open();
+            SqlDataReader dr = comm.ExecuteReader();
+            while (dr.Read())
+            {
+              userId = Convert.ToInt32(dr["Id"]);
+            }
+          }
+          return userId;
+        }
 
         public Users UpdateUsr(int id, Users usrObj)
         {

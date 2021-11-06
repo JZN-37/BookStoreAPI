@@ -34,9 +34,10 @@ namespace BookStoreAPI.Models
       return bookObj;
     }
 
-    public Book DeleteBook(int id)
+    public bool DeleteBook(int id)
     {
-      Book book = GetBookById(id);
+      BookWithCatName book = GetBookById(id);
+      int rows = 0;
       string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
       using (SqlConnection conn = new SqlConnection(connectionString))
       {
@@ -48,30 +49,38 @@ namespace BookStoreAPI.Models
         comm1.CommandText = "exec usp_IDelBk '" + book.BCatId + "' , '" + book.BStatus + "' ";
         conn.Open();
         //SqlDataReader dr = comm.ExecuteReader();
-        int rows = comm.ExecuteNonQuery();
+        rows = comm.ExecuteNonQuery();
         
         //SqlDataReader dr1 = comm1.ExecuteReader();
         rows = comm1.ExecuteNonQuery();
         
       }
-      return book;
+      if (rows > 0)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+
     }
 
-    public List<Book> GetAllBook()
+    public List<BookWithCatName> GetAllBook()
     {
-      List<Book> bookList = new List<Book>();
+      List<BookWithCatName> bookList = new List<BookWithCatName>();
       string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
                                                                                                 
       using (SqlConnection conn = new SqlConnection(connectionString))
       {
         SqlCommand comm = new SqlCommand();
         comm.Connection = conn;
-        comm.CommandText = "select * from Book";
+        comm.CommandText = "select * from Book b, Category c where b.BCatId= c.CatId";
         conn.Open();
         SqlDataReader dr = comm.ExecuteReader();
         while (dr.Read())
         {
-          Book book = new Book();
+          BookWithCatName book = new BookWithCatName();
 
           book.BId = Convert.ToInt32(dr["BId"]);
           book.BCatId = Convert.ToInt32(dr["BCatId"]);
@@ -85,6 +94,7 @@ namespace BookStoreAPI.Models
           book.BStatus = Convert.ToBoolean(dr["BStatus"]);
           book.BImgPath = dr["BImgPath"].ToString();
           book.Norders = Convert.ToInt32(dr["Norders"]);
+          book.BCatName = dr["CatName"].ToString();
 
           bookList.Add(book);
         }
@@ -92,15 +102,15 @@ namespace BookStoreAPI.Models
       return bookList;
     }
 
-    public Book GetBookById(int id)
+    public BookWithCatName GetBookById(int id)
     {
-      Book book = new Book();
+      BookWithCatName book = new BookWithCatName();
       string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
       using (SqlConnection conn = new SqlConnection(connectionString))
       {
         SqlCommand comm = new SqlCommand();
         comm.Connection = conn;
-        comm.CommandText = "select * from Book where BId =" + id + " ";
+        comm.CommandText = "select * from Book b, Category c where b.BId =" + id + " and  b.BCatId= c.CatId ";
         conn.Open();
         SqlDataReader dr = comm.ExecuteReader();
         while (dr.Read())
@@ -117,6 +127,7 @@ namespace BookStoreAPI.Models
           book.BStatus = Convert.ToBoolean(dr["BStatus"]);
           book.BImgPath = dr["BImgPath"].ToString();
           book.Norders = Convert.ToInt32(dr["Norders"]);
+          book.BCatName = dr["CatName"].ToString();
         }
       }
       return book;
@@ -138,9 +149,10 @@ namespace BookStoreAPI.Models
       return book;
     }
 
-    public Book UpdateBookCount(int id, int extraBookQty)
+    /*public bool UpdateBookCount(int id, int extraBookQty)
     {
-      Book book = GetBookById(id);
+      BookWithCatName book = GetBookById(id);
+      int 
       string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
       using (SqlConnection conn = new SqlConnection(connectionString))
       {
@@ -156,6 +168,6 @@ namespace BookStoreAPI.Models
         
       }
       return book;
-    }
+    }*/
   }
 }

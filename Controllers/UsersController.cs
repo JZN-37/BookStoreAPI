@@ -30,6 +30,13 @@ namespace BookStoreAPI.Controllers
             return usersSqlObj.GetUsrById(id);
         }
 
+        [HttpGet]
+        //http://localhost:60494/api/Users?userName=Martha
+        public int Get(string userName)
+        {
+          return usersSqlObj.GetUIdByUName(userName);
+        }
+
         ////Called Only From AccountController
         //[HttpPost]
         //public Users Post(Users usrObj)
