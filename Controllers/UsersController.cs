@@ -43,10 +43,10 @@ namespace BookStoreAPI.Controllers
             return usersSqlObj.UpdateUsr(id, usrObj);
         }
 
-        [HttpDelete]
-        public Users Delete(int id)
-        {
-            return usersSqlObj.DeleteUser(id);
-        }
+        //[HttpDelete]
+        //public Users Delete(int id)
+        //{
+        //    return usersSqlObj.DeleteUser(id);
+        //}
     }
 }
