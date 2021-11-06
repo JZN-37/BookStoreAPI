@@ -1,3 +1,4 @@
+using BookStoreAPI.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,6 +11,7 @@ namespace BookStoreAPI.Models
 {
     public class UsersSQLImpl
     {
+        //Called from AccountController
         public Users AddUser(Users usrObj)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
@@ -106,6 +108,23 @@ namespace BookStoreAPI.Models
 
         public Users UpdateUsr(int id, Users usrObj)
         {
+            //Update Code First
+            string connectionString1 = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection conn1 = new SqlConnection(connectionString1))
+            {
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = conn1;
+                int UStatus = 0;
+                if (usrObj.UStatus == true)
+                {
+                    UStatus = 1;
+                }
+                comm1.CommandText = "UPDATE [User] SET PhoneNumber='" + usrObj.UMobile + "', Email= '" + usrObj.UEmail + "' , UStatus = " + UStatus + " WHERE UserID=" + id + " ";
+                conn1.Open();
+                int rows = comm1.ExecuteNonQuery();
+            }
+
+            //Update Code First
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -116,10 +135,11 @@ namespace BookStoreAPI.Models
                 {
                     UStatus = 1;
                 }
-                comm.CommandText = "UPDATE Users SET UName='" + usrObj.UName + "', UPwd='" + usrObj.UPwd + "',  UMobile='" + usrObj.UMobile + "', UEmail= '"+ usrObj.UEmail + "' , UStatus = " + UStatus + " WHERE Id=" + id + " ";
+                comm.CommandText = "UPDATE Users SET UMobile='" + usrObj.UMobile + "', UEmail= '"+ usrObj.UEmail + "' , UStatus = " + UStatus + " WHERE Id=" + id + " ";
                 conn.Open();
                 int rows = comm.ExecuteNonQuery();
             }
+
             return usrObj;
         }
 

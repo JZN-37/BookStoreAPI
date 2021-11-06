@@ -24,7 +24,7 @@ namespace BookStoreAPI
       var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
       var manager = new UserManager<ApplicationUser>(userStore);
       var user = await manager.FindAsync(context.UserName, context.Password);
-      if (user != null)
+      if (user != null && user.UStatus==true)
       {
         var identity = new ClaimsIdentity(context.Options.AuthenticationType);
         identity.AddClaim(new Claim("Username", user.UserName));

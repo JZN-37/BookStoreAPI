@@ -30,12 +30,13 @@ namespace BookStoreAPI.Controllers
             return usersSqlObj.GetUsrById(id);
         }
 
-        [HttpPost]
-        public Users Post(Users usrObj)
-        {
+        ////Called Only From AccountController
+        //[HttpPost]
+        //public Users Post(Users usrObj)
+        //{
 
-            return usersSqlObj.AddUser(usrObj);
-        }
+        //    return usersSqlObj.AddUser(usrObj);
+        //}
 
         [HttpPut]
         public Users Put(int id, Users usrObj)
