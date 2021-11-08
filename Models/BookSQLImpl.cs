@@ -30,7 +30,7 @@ namespace BookStoreAPI.Models
 
                     int rows = comm.ExecuteNonQuery();
                 }
-                return "Success";
+                return "success";
             }
             catch(Exception ex)
             {
