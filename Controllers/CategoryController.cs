@@ -31,20 +31,20 @@ namespace BookStoreAPI.Controllers
         }
 
         [HttpPost]
-        public Category Post(Category catObj)
+        public string Post(Category catObj)
         {
 
             return catSqlObj.AddCategory(catObj);
         }
 
         [HttpPut]
-        public Category Put(int id, Category catObj)
+        public string Put(int id, Category catObj)
         {
             return catSqlObj.UpdateCat(id, catObj);
         }
 
         [HttpDelete]
-        public Category Delete(int id)
+        public string Delete(int id)
         {
             return catSqlObj.DeleteCategory(id);
         }

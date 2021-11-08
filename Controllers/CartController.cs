@@ -31,20 +31,20 @@ namespace BookStoreAPI.Controllers
         }
 
         [HttpPost]
-        public Cart Post(Cart cartObj)
+        public string Post(Cart cartObj)
         {
 
             return cartSqlObj.AddCart(cartObj);
         }
 
         [HttpPut]
-        public Cart Put(int id,Cart cartObj)
+        public string Put(int id,Cart cartObj)
         {
             return cartSqlObj.UpdateCart(id,cartObj);
         }
 
         [HttpDelete]
-        public List<Cart> Delete(int id,int bid)
+        public string Delete(int id,int bid)
         {
             return cartSqlObj.DeleteCartRecord(id,bid);
         }

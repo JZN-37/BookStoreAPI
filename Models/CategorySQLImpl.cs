@@ -9,41 +9,55 @@ namespace BookStoreAPI.Models
 {
     public class CategorySQLImpl
     {
-        public Category AddCategory(Category catObj)
+        public string AddCategory(Category catObj)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                SqlCommand comm = new SqlCommand();
-                //insert into Category values('Comedy', 'Comedy Description' , '~/Image/Comedy/ComedyCat.jpg' , 0, 1, 0, '01/02/2021')
-                comm.Connection = conn;
-                int catStatus = 0;
-                if (catObj.CatStatus == true)
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    catStatus = 1;
+                    SqlCommand comm = new SqlCommand();
+                    //insert into Category values('Comedy', 'Comedy Description' , '~/Image/Comedy/ComedyCat.jpg' , 0, 1, 0, '01/02/2021')
+                    comm.Connection = conn;
+                    int catStatus = 0;
+                    if (catObj.CatStatus == true)
+                    {
+                        catStatus = 1;
+                    }
+                    comm.CommandText = "insert into Category values ('" + catObj.CatName + "' , '" + catObj.CatDesc + "' , '" + catObj.CatImgPath + "', " + 0 + " , " + catStatus + "  , " + 0 + " , '" + DateTime.Now + "' )";
+                    conn.Open();
+                    int rows = comm.ExecuteNonQuery();
+
                 }
-                comm.CommandText = "insert into Category values ('" + catObj.CatName + "' , '" + catObj.CatDesc + "' , '" + catObj.CatImgPath + "', " + 0 + " , " + catStatus + "  , " + 0 + " , '" + DateTime.Now + "' )";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
-                
+                return "Success";
             }
-            return catObj;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
-        public Category DeleteCategory(int id)
+        public string DeleteCategory(int id)
         {
-            Category catObj = GetCatById(id);
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
-                comm.CommandText = "DELETE FROM Category  WHERE CatId= " + id + " ";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
+                Category catObj = GetCatById(id);
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand comm = new SqlCommand();
+                    comm.Connection = conn;
+                    comm.CommandText = "DELETE FROM Category  WHERE CatId= " + id + " ";
+                    conn.Open();
+                    int rows = comm.ExecuteNonQuery();
 
+                }
+                return "Success";
             }
-            return catObj;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public List<Category> GetAllCategory()
@@ -105,24 +119,31 @@ namespace BookStoreAPI.Models
         }
 
 
-        public Category UpdateCat(int id, Category catObj)
+        public string UpdateCat(int id, Category catObj)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
-                int catStatus = 0;
-                if (catObj.CatStatus == true)
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    catStatus = 1;
+                    SqlCommand comm = new SqlCommand();
+                    comm.Connection = conn;
+                    int catStatus = 0;
+                    if (catObj.CatStatus == true)
+                    {
+                        catStatus = 1;
+                    }
+                    comm.CommandText = "UPDATE Category SET CatName='" + catObj.CatName + "', CatDesc='" + catObj.CatDesc + "',  CatImgPath='" + catObj.CatImgPath + "', CatStatus = " + catStatus + " WHERE CatId=" + id + " ";
+                    conn.Open();
+                    int rows = comm.ExecuteNonQuery();
+
                 }
-                comm.CommandText = "UPDATE Category SET CatName='" + catObj.CatName + "', CatDesc='" + catObj.CatDesc + "',  CatImgPath='" + catObj.CatImgPath + "', CatStatus = " + catStatus + " WHERE CatId=" + id + " ";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
-                
+                return "Success";
             }
-            return catObj;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }

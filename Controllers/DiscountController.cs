@@ -31,20 +31,20 @@ namespace BookStoreAPI.Controllers
         }
 
         [HttpPost]
-        public Discount Post(Discount discObj)
+        public string Post(Discount discObj)
         {
 
             return discSqlObj.AddDisc(discObj);
         }
 
         [HttpPut]
-        public Discount Put(int id, Discount discObj)
+        public string Put(int id, Discount discObj)
         {
             return discSqlObj.UpdateDisc(id, discObj);
         }
 
         [HttpDelete]
-        public Discount Delete(int id)
+        public string Delete(int id)
         {
             return discSqlObj.DeleteDisc(id);
         }

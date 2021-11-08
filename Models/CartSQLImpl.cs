@@ -9,38 +9,51 @@ namespace BookStoreAPI.Models
 {
     public class CartSQLImpl
     {
-        public Cart AddCart(Cart cartObj)
+        public string AddCart(Cart cartObj)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                SqlCommand comm = new SqlCommand();
-                
-                comm.Connection = conn;
-                comm.CommandText = "insert into Cart values ("+cartObj.UserId+","+cartObj.BId+","+cartObj.BQty+")";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
-                
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand comm = new SqlCommand();
+
+                    comm.Connection = conn;
+                    comm.CommandText = "insert into Cart values (" + cartObj.UserId + "," + cartObj.BId + "," + cartObj.BQty + ")";
+                    conn.Open();
+                    int rows = comm.ExecuteNonQuery();
+
+                }
+                return "Success";
             }
-            return cartObj;
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         //http://localhost:60494/api/Cart/1?bid=2
-        public List<Cart> DeleteCartRecord(int id, int bid) 
+        public string DeleteCartRecord(int id, int bid) 
         {
-            
-            List<Cart> cartlist = GetCartById(id);
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
-                comm.CommandText = "DELETE FROM Cart  WHERE UserId = " + id + " and BId="+bid+"";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
+                List<Cart> cartlist = GetCartById(id);
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand comm = new SqlCommand();
+                    comm.Connection = conn;
+                    comm.CommandText = "DELETE FROM Cart  WHERE UserId = " + id + " and BId=" + bid + "";
+                    conn.Open();
+                    int rows = comm.ExecuteNonQuery();
 
+                }
+                return "Success";
             }
-            return cartlist;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public List<Cart> GetAllCart()
@@ -100,20 +113,27 @@ namespace BookStoreAPI.Models
         }
 
 
-        public Cart UpdateCart(int id,Cart cartObj)
+        public string UpdateCart(int id,Cart cartObj)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
-                
-                comm.CommandText = "UPDATE Cart SET BQty="+ cartObj.BQty+ " WHERE UserId =" + id + " and BId = " + cartObj.BId + " ";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
-                
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand comm = new SqlCommand();
+                    comm.Connection = conn;
+
+                    comm.CommandText = "UPDATE Cart SET BQty=" + cartObj.BQty + " WHERE UserId =" + id + " and BId = " + cartObj.BId + " ";
+                    conn.Open();
+                    int rows = comm.ExecuteNonQuery();
+
+                }
+                return "Success";
             }
-            return cartObj;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }

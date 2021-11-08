@@ -9,41 +9,55 @@ namespace BookStoreAPI.Models
 {
     public class DiscountSQLImpl
     {
-        public Discount AddDisc(Discount discObj)
+        public string AddDisc(Discount discObj)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                int DStatus = 0;
-                if (discObj.DStatus == true)
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    DStatus = 1;
-                }
-                SqlCommand comm = new SqlCommand();
+                    int DStatus = 0;
+                    if (discObj.DStatus == true)
+                    {
+                        DStatus = 1;
+                    }
+                    SqlCommand comm = new SqlCommand();
 
-                comm.Connection = conn;
-                comm.CommandText = "insert into Discount values ('" + discObj.DCouponCode + "'," + discObj.DDiscountValue + ","+ DStatus + ")";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
-                
+                    comm.Connection = conn;
+                    comm.CommandText = "insert into Discount values ('" + discObj.DCouponCode + "'," + discObj.DDiscountValue + "," + DStatus + ")";
+                    conn.Open();
+                    int rows = comm.ExecuteNonQuery();
+
+                }
+                return "Success";
             }
-            return discObj;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
-        public Discount DeleteDisc(int id)
+        public string DeleteDisc(int id)
         {
-            Discount wishlist = GetDiscById(id);
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
-                comm.CommandText = "DELETE FROM Discount  WHERE DId = " + id + " ";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
+                Discount wishlist = GetDiscById(id);
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand comm = new SqlCommand();
+                    comm.Connection = conn;
+                    comm.CommandText = "DELETE FROM Discount  WHERE DId = " + id + " ";
+                    conn.Open();
+                    int rows = comm.ExecuteNonQuery();
 
+                }
+                return "Success";
             }
-            return wishlist;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public List<Discount> GetAllDisc()
@@ -98,24 +112,31 @@ namespace BookStoreAPI.Models
         }
 
 
-        public Discount UpdateDisc(int id, Discount discObj)
+        public string UpdateDisc(int id, Discount discObj)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                int DStatus = 0;
-                if (discObj.DStatus == true)
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    DStatus = 1;
-                }
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
+                    int DStatus = 0;
+                    if (discObj.DStatus == true)
+                    {
+                        DStatus = 1;
+                    }
+                    SqlCommand comm = new SqlCommand();
+                    comm.Connection = conn;
 
-                comm.CommandText = "UPDATE Discount SET DCouponCode= '" + discObj.DCouponCode + "', DDiscountValue = "+ discObj.DDiscountValue + ", DStatus = "+ DStatus + " WHERE DId =" + id + " ";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
+                    comm.CommandText = "UPDATE Discount SET DCouponCode= '" + discObj.DCouponCode + "', DDiscountValue = " + discObj.DDiscountValue + ", DStatus = " + DStatus + " WHERE DId =" + id + " ";
+                    conn.Open();
+                    int rows = comm.ExecuteNonQuery();
+                }
+                return "Success";
             }
-            return discObj;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }
