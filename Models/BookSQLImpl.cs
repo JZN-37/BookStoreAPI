@@ -97,7 +97,7 @@ namespace BookStoreAPI.Models
           book.BCatId = Convert.ToInt32(dr["BCatId"]);
           book.BTitle = dr["BTitle"].ToString();
           book.BISBN = dr["BISBN"].ToString();
-          book.BYear = dr["BYear"].ToString();
+          book.BYear = (Convert.ToDateTime(dr["BYear"].ToString()).Year).ToString();
           book.BPrice = Convert.ToDouble(dr["BPrice"]);
           book.BDesc = dr["BDesc"].ToString();
           book.BPosition = Convert.ToDouble(dr["BPosition"]);
@@ -162,7 +162,7 @@ namespace BookStoreAPI.Models
           book.BCatId = Convert.ToInt32(dr["BCatId"]);
           book.BTitle = dr["BTitle"].ToString();
           book.BISBN = dr["BISBN"].ToString();
-          book.BYear = dr["BYear"].ToString();
+          book.BYear = (Convert.ToDateTime(dr["BYear"].ToString()).Year).ToString();
           book.BPrice = Convert.ToDouble(dr["BPrice"]);
           book.BDesc = dr["BDesc"].ToString();
           book.BPosition = Convert.ToDouble(dr["BPosition"]);
