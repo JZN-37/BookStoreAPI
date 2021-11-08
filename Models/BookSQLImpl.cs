@@ -124,12 +124,12 @@ namespace BookStoreAPI.Models
                 comm.Connection = conn;
                 if (ColName == "BYear")
                 {
-                    comm.CommandText = "select top(5) from Book order by YEAR(BYear) desc";
+                    comm.CommandText = "select top(5) * from Book order by YEAR(BYear) desc";
                 }
                 else
                 if (ColName == "BPosition")
                 {
-                    comm.CommandText = "select top(5) from Book order by BPosition desc";
+                    comm.CommandText = "select top(5) * from Book order by BPosition desc";
                 }
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
