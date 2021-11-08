@@ -36,7 +36,7 @@ namespace BookStoreAPI.Controllers
     }
 
     [HttpPut]
-    public Book Put(int id, Book book)
+    public string Put(int id, Book book)
     {
       return bookSqlObj.UpdateBook(id, book);
     }

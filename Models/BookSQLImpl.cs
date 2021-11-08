@@ -133,20 +133,28 @@ namespace BookStoreAPI.Models
       return book;
     }
 
-    public Book UpdateBook(int id, Book book)
+    public string UpdateBook(int id, Book book)
     {
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
-      using (SqlConnection conn = new SqlConnection(connectionString))
+      try
       {
-        SqlCommand comm = new SqlCommand();
-        comm.Connection = conn;
-        DateTime YeartoDate = DateTime.Parse("01/01/" + book.BYear);
-        comm.CommandText = "UPDATE Book SET BCatId=" + book.BCatId + ", BTitle='" + book.BTitle + "',  BISBN='" + book.BISBN + "', BYear = '" +book.BYear + "',BPrice = " + book.BPrice + ",BDesc ='" + book.BDesc + "', BCount='" + book.BCount + "', BStatus='" + book.BStatus + "' , BImgPath = '" + book.BImgPath + "'   WHERE BId=" + id + "  ";
-        conn.Open();
-        int rows = comm.ExecuteNonQuery();        
+        string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+          SqlCommand comm = new SqlCommand();
+          comm.Connection = conn;
+          DateTime YeartoDate = DateTime.Parse("01/01/" + book.BYear);
+          comm.CommandText = "UPDATE Book SET BCatId=" + book.BCatId + ", BTitle='" + book.BTitle + "',  BISBN='" + book.BISBN + "', BYear = '" + book.BYear + "',BPrice = " + book.BPrice + ",BDesc ='" + book.BDesc + "', BCount='" + book.BCount + "', BStatus='" + book.BStatus + "' , BImgPath = '" + book.BImgPath + "'   WHERE BId=" + id + "  ";
+          conn.Open();
+          int rows = comm.ExecuteNonQuery();
 
+        }
+        return "Success";
       }
-      return book;
+      catch(Exception ex)
+      {
+        return ex.Message;
+      }
+
     }
 
     /*public bool UpdateBookCount(int id, int extraBookQty)
