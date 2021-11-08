@@ -17,10 +17,11 @@ namespace BookStoreAPI.Controllers
       adminSqlObj = new AdminSQLImpl();
     }
 
-    [HttpPost]
-    public bool Post(Admin adminObj)
-    {
-      return adminSqlObj.CheckAdminLogIn(adminObj);
-    }
+    //    //This is not required since, its done within AccountController
+    //[HttpPost]
+    //public bool Post(Admin adminObj)
+    //{
+    //  return adminSqlObj.CheckAdminLogIn(adminObj);
+    //}
   }
 }
