@@ -12,27 +12,35 @@ namespace BookStoreAPI.Models
     public class UsersSQLImpl
     {
         //Called from AccountController
-        public Users AddUser(Users usrObj)
+        public string AddUser(Users usrObj)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
+              string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+              using (SqlConnection conn = new SqlConnection(connectionString))
+              {
                 SqlCommand comm = new SqlCommand();
-                
+
                 comm.Connection = conn;
                 int UStatus = 0;
                 if (usrObj.UStatus == true)
                 {
-                    UStatus = 1;
+                  UStatus = 1;
                 }
-                comm.CommandText = "insert into Users values ("+ usrObj.Id + ",'" + usrObj.UName + "' , '" + usrObj.UPwd + "' , '" + usrObj.UMobile + "', '" + usrObj.UEmail + "' , " + UStatus + "  , " + 0 + "  )";
+                comm.CommandText = "insert into Users values (" + usrObj.Id + ",'" + usrObj.UName + "' , '" + usrObj.UPwd + "' , '" + usrObj.UMobile + "', '" + usrObj.UEmail + "' , " + UStatus + "  , " + 0 + "  )";
                 conn.Open();
-                
+
                 int rows = comm.ExecuteNonQuery();
-                               
-                
+
+
+              }
+              return "Success";
             }
-            return usrObj;
+            catch(Exception ex)
+            {
+              return ex.Message;
+            }
+
         }
 
         //public Users DeleteUser(int id)
@@ -124,41 +132,50 @@ namespace BookStoreAPI.Models
           return userId;
         }
 
-        public Users UpdateUsr(int id, Users usrObj)
+        public string UpdateUsr(int id, Users usrObj)
         {
+          try
+          {
             //Update Code First
             string connectionString1 = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             using (SqlConnection conn1 = new SqlConnection(connectionString1))
             {
-                SqlCommand comm1 = new SqlCommand();
-                comm1.Connection = conn1;
-                int UStatus = 0;
-                if (usrObj.UStatus == true)
-                {
-                    UStatus = 1;
-                }
-                comm1.CommandText = "UPDATE [User] SET PhoneNumber='" + usrObj.UMobile + "', Email= '" + usrObj.UEmail + "' , UStatus = " + UStatus + " WHERE UserID=" + id + " ";
-                conn1.Open();
-                int rows = comm1.ExecuteNonQuery();
+              SqlCommand comm1 = new SqlCommand();
+              comm1.Connection = conn1;
+              int UStatus = 0;
+              if (usrObj.UStatus == true)
+              {
+                UStatus = 1;
+              }
+              comm1.CommandText = "UPDATE [User] SET PhoneNumber='" + usrObj.UMobile + "', Email= '" + usrObj.UEmail + "' , UStatus = " + UStatus + " WHERE UserID=" + id + " ";
+              conn1.Open();
+              int rows = comm1.ExecuteNonQuery();
             }
 
             //Update Code First
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
-                int UStatus = 0;
-                if (usrObj.UStatus == true)
-                {
-                    UStatus = 1;
-                }
-                comm.CommandText = "UPDATE Users SET UMobile='" + usrObj.UMobile + "', UEmail= '"+ usrObj.UEmail + "' , UStatus = " + UStatus + " WHERE Id=" + id + " ";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
+              SqlCommand comm = new SqlCommand();
+              comm.Connection = conn;
+              int UStatus = 0;
+              if (usrObj.UStatus == true)
+              {
+                UStatus = 1;
+              }
+              comm.CommandText = "UPDATE Users SET UMobile='" + usrObj.UMobile + "', UEmail= '" + usrObj.UEmail + "' , UStatus = " + UStatus + " WHERE Id=" + id + " ";
+              conn.Open();
+              int rows = comm.ExecuteNonQuery();
             }
 
-            return usrObj;
+            return "Success";
+
+          }
+          catch(Exception ex)
+          {
+            return ex.Message;
+          }
+
         }
 
   }

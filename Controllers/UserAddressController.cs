@@ -1,4 +1,4 @@
-﻿using BookStoreAPI.Models;
+using BookStoreAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,14 +31,14 @@ namespace BookStoreAPI.Controllers
         }
 
         [HttpPost]
-        public UserAddress Post(UserAddress addrObj)
+        public string Post(UserAddress addrObj)
         {
 
             return addrSqlObj.AddAddr(addrObj);
         }
 
         [HttpPut]
-        public UserAddress Put(int id, UserAddress addrObj)
+        public string Put(int id, UserAddress addrObj)
         {
             return addrSqlObj.UpdateAddr(id, addrObj);
         }

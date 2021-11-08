@@ -9,20 +9,29 @@ namespace BookStoreAPI.Models
 {
   public class UserBankDetailsSQLImpl
   {
-    public UserBankDetails AddBankDetails(UserBankDetails bankObj)
+    public string AddBankDetails(UserBankDetails bankObj)
     {
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-      using (SqlConnection conn = new SqlConnection(connectionString))
+      try
       {
-        SqlCommand comm = new SqlCommand();
+        string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+          SqlCommand comm = new SqlCommand();
 
-        comm.Connection = conn;
-        comm.CommandText = "insert into UserBankDetails values (" + bankObj.UserId + ",'" + bankObj.UserCard + "','" + bankObj.CardExpiry + "' )";
-        conn.Open();
-        int rows = comm.ExecuteNonQuery();
+          comm.Connection = conn;
+          comm.CommandText = "insert into UserBankDetails values (" + bankObj.UserId + ",'" + bankObj.UserCard + "','" + bankObj.CardExpiry + "' )";
+          conn.Open();
+          int rows = comm.ExecuteNonQuery();
+
+        }
+        return "Success";
 
       }
-      return bankObj;
+      catch(Exception ex)
+      {
+        return ex.Message;
+      }
+
     }
 
     public List<UserBankDetails> DeleteBankDetails(int uid, int UserBankDetailsId)
@@ -96,19 +105,27 @@ namespace BookStoreAPI.Models
     }
 
 
-    public UserBankDetails UpdateBankDetails(int id, UserBankDetails bankObj)
+    public string UpdateBankDetails(int id, UserBankDetails bankObj)
     {
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-      using (SqlConnection conn = new SqlConnection(connectionString))
+      try
       {
-        SqlCommand comm = new SqlCommand();
-        comm.Connection = conn;
+        string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+          SqlCommand comm = new SqlCommand();
+          comm.Connection = conn;
 
-        comm.CommandText = "UPDATE UserBankDetails SET UserCard='" + bankObj.UserCard + "',CardExpiry='" + bankObj.CardExpiry + "' where UserBankDetailsId = " + bankObj.UserBankDetailsId+" ";
-        conn.Open();
-        int rows = comm.ExecuteNonQuery();
+          comm.CommandText = "UPDATE UserBankDetails SET UserCard='" + bankObj.UserCard + "',CardExpiry='" + bankObj.CardExpiry + "' where UserBankDetailsId = " + bankObj.UserBankDetailsId + " ";
+          conn.Open();
+          int rows = comm.ExecuteNonQuery();
+        }
+        return "Success";
       }
-      return bankObj;
+      catch(Exception ex)
+      {
+        return ex.Message;
+      }
+
     }
   }
 }

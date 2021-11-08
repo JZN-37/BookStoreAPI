@@ -30,14 +30,14 @@ namespace BookStoreAPI.Controllers
     }
 
     [HttpPost]
-    public Ratings Post(Ratings ratObj)
+    public string Post(Ratings ratObj)
     {
 
       return ratSqlObj.AddRatings(ratObj);
     }
 
     [HttpPut]
-    public Ratings Put(int id, Ratings ratObj)
+    public string Put(int id, Ratings ratObj)
     {
       return ratSqlObj.UpdateRatings(id, ratObj);
     }

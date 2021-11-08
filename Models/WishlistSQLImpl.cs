@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -9,19 +9,27 @@ namespace BookStoreAPI.Models
 {
     public class WishlistSQLImpl
     {
-        public Wishlist AddWish(Wishlist wishObj)
+        public string AddWish(Wishlist wishObj)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                SqlCommand comm = new SqlCommand();
+      try
+      {
+        string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+          SqlCommand comm = new SqlCommand();
 
-                comm.Connection = conn;
-                comm.CommandText = "insert into Wishlist values (" + wishObj.UserId + "," + wishObj.BId + ")";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
-            }
-            return wishObj;
+          comm.Connection = conn;
+          comm.CommandText = "insert into Wishlist values (" + wishObj.UserId + "," + wishObj.BId + ")";
+          conn.Open();
+          int rows = comm.ExecuteNonQuery();
+        }
+        return "Success";
+      }
+      catch(Exception ex)
+      {
+        return ex.Message;
+      }
+
         }
 
         public List<Wishlist> DeleteWish(int id, int bid)

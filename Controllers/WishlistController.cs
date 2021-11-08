@@ -33,7 +33,7 @@ namespace BookStoreAPI.Controllers
         }
 
         [HttpPost]
-        public Wishlist Post(Wishlist wishObj)
+        public string Post(Wishlist wishObj)
         {
 
             return wishSqlObj.AddWish(wishObj);

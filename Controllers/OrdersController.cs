@@ -38,7 +38,7 @@ namespace BookStoreAPI.Controllers
     }
 
     [HttpPost]
-    public List<Orders> Post(OrdersInsert ordnsrtIObj)
+    public string Post(OrdersInsert ordnsrtIObj)
     {
       return orderSqlObj.AddOrders(ordnsrtIObj);
     }

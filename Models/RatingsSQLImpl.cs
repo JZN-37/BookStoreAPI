@@ -9,20 +9,29 @@ namespace BookStoreAPI.Models
 {
   public class RatingsSQLImpl
   {
-    public Ratings AddRatings(Ratings ratObj)
+    public string AddRatings(Ratings ratObj)
     {
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-      using (SqlConnection conn = new SqlConnection(connectionString))
+      try
       {
-        SqlCommand comm = new SqlCommand();
-        comm.Connection = conn;
-        //insert into Ratings values(1 , 1, 4)
-        comm.CommandText = "insert into Ratings values (" + ratObj.UserId + " , " + ratObj.BId + "  , " + ratObj.UserRating + " )";
-        conn.Open();
-        //SqlDataReader dr = comm.ExecuteReader();
-        int rows = comm.ExecuteNonQuery();
+        string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+          SqlCommand comm = new SqlCommand();
+          comm.Connection = conn;
+          //insert into Ratings values(1 , 1, 4)
+          comm.CommandText = "insert into Ratings values (" + ratObj.UserId + " , " + ratObj.BId + "  , " + ratObj.UserRating + " )";
+          conn.Open();
+          //SqlDataReader dr = comm.ExecuteReader();
+          int rows = comm.ExecuteNonQuery();
+        }
+        return "Success";
+
       }
-      return ratObj;
+      catch(Exception ex)
+      {
+        return ex.Message;
+      }
+
     }
 
     /*public Category DeleteCategory(int id)
@@ -111,20 +120,28 @@ namespace BookStoreAPI.Models
     }
 
 
-    public Ratings UpdateRatings(int id, Ratings ratObj)
+    public string UpdateRatings(int id, Ratings ratObj)
     {
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-      using (SqlConnection conn = new SqlConnection(connectionString))
+      try
       {
-        SqlCommand comm = new SqlCommand();
-        comm.Connection = conn;
+        string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+          SqlCommand comm = new SqlCommand();
+          comm.Connection = conn;
 
-        comm.CommandText = "UPDATE Ratings SET UserRating='" + ratObj.UserRating + "'  WHERE UserId=" + id + "  and BId = "+ratObj.BId+" ";
-        conn.Open();
-        //SqlDataReader dr = comm.ExecuteReader();
-        int rows = comm.ExecuteNonQuery();
+          comm.CommandText = "UPDATE Ratings SET UserRating='" + ratObj.UserRating + "'  WHERE UserId=" + id + "  and BId = " + ratObj.BId + " ";
+          conn.Open();
+          //SqlDataReader dr = comm.ExecuteReader();
+          int rows = comm.ExecuteNonQuery();
+        }
+        return "Success";
       }
-      return ratObj;
+      catch(Exception ex)
+      {
+        return ex.Message;
+      }
+
     }
   }
 }

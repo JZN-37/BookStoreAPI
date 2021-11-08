@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -9,20 +9,28 @@ namespace BookStoreAPI.Models
 {
     public class UserAddressSQLImpl
     {
-        public UserAddress AddAddr(UserAddress addrObj)
+        public string AddAddr(UserAddress addrObj)
         {
+          try
+          {
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
-            {              
-                SqlCommand comm = new SqlCommand();
+            {
+              SqlCommand comm = new SqlCommand();
 
-                comm.Connection = conn;
-                comm.CommandText = "insert into UserAddress values (" + addrObj.UserId + ",'"+addrObj.UAddrLine1 + "','" + addrObj.UAddrLine2 + "','" + addrObj.UAddrCity + "','" + addrObj.UAddrCountry + "','" + addrObj.UAddrPincode + "')";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
+              comm.Connection = conn;
+              comm.CommandText = "insert into UserAddress values (" + addrObj.UserId + ",'" + addrObj.UAddrLine1 + "','" + addrObj.UAddrLine2 + "','" + addrObj.UAddrCity + "','" + addrObj.UAddrCountry + "','" + addrObj.UAddrPincode + "')";
+              conn.Open();
+              int rows = comm.ExecuteNonQuery();
 
             }
-            return addrObj;
+            return "Success";
+          }
+          catch(Exception ex)
+          {
+            return ex.Message;
+          }
+
         }
 
         //http://localhost:60494/api/UserAddress?uid=2&addrid=3
@@ -103,19 +111,27 @@ namespace BookStoreAPI.Models
         }
 
 
-        public UserAddress UpdateAddr(int id, UserAddress addrObj)
+        public string UpdateAddr(int id, UserAddress addrObj)
         {
+          try
+          {
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
+              SqlCommand comm = new SqlCommand();
+              comm.Connection = conn;
 
-                comm.CommandText = "UPDATE UserAddress SET UAddrLine1='"+addrObj.UAddrLine1+ "',UAddrLine2='" + addrObj.UAddrLine2 + "',UAddrCity='" + addrObj.UAddrCity + "',UAddrCountry='" + addrObj.UAddrCountry + "' ,UAddrPincode='" + addrObj.UAddrPincode + "'  WHERE UserId =" + id + " and UserAddrId="+ addrObj.UserAddrId+ " ";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
+              comm.CommandText = "UPDATE UserAddress SET UAddrLine1='" + addrObj.UAddrLine1 + "',UAddrLine2='" + addrObj.UAddrLine2 + "',UAddrCity='" + addrObj.UAddrCity + "',UAddrCountry='" + addrObj.UAddrCountry + "' ,UAddrPincode='" + addrObj.UAddrPincode + "'  WHERE UserId =" + id + " and UserAddrId=" + addrObj.UserAddrId + " ";
+              conn.Open();
+              int rows = comm.ExecuteNonQuery();
             }
-            return addrObj;
+            return "Success";
+          }
+          catch(Exception ex)
+          {
+            return ex.Message;
+          }
+
         }
     }
 }

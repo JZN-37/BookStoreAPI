@@ -9,47 +9,55 @@ namespace BookStoreAPI.Models
 {
   public class OrdersSQLImpl
   {
-    public List<Orders> AddOrders(OrdersInsert ordnsrtIObj)
+    public string AddOrders(OrdersInsert ordnsrtIObj)
     {
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-      List<Orders> orderList = new List<Orders>();
-      using (SqlConnection conn = new SqlConnection(connectionString))
+      try
       {
-        SqlCommand comm = new SqlCommand();
-        SqlCommand comm1 = new SqlCommand();
-
-        comm.Connection = conn;
-        comm1.Connection = conn;
-
-
-        //First increment the UOrderNo of the current user to get the latest order id for current user
-        //To do this we call the stored procedure usp_BeforeInsrtToOrders with current user's userid
-        comm.CommandText = "exec usp_BeforeInsrtToOrders " + ordnsrtIObj.UserId + " ";
-        conn.Open();
-        int rows = comm.ExecuteNonQuery();
-
-
-        //For each item in the BId list we will insert into the Orders table using the stored procedure usp_InsrtOrders  @userId, @bookId, @bookQty
-        //After that delete the record from Cart as it has been purchased
-
-        for(int c=0; c<ordnsrtIObj.BId.Count; c++)
+        string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+        List<Orders> orderList = new List<Orders>();
+        using (SqlConnection conn = new SqlConnection(connectionString))
         {
-          comm1.CommandText = "exec usp_InsrtOrders "+ordnsrtIObj.UserId+", "+ordnsrtIObj.BId[c]+", "+ordnsrtIObj.BQty[c]+" ";
-          comm1.ExecuteNonQuery();
-          CartSQLImpl cartSqlObj = new CartSQLImpl();
-          cartSqlObj.DeleteCartRecord(ordnsrtIObj.UserId, ordnsrtIObj.BId[c]);
+          SqlCommand comm = new SqlCommand();
+          SqlCommand comm1 = new SqlCommand();
+
+          comm.Connection = conn;
+          comm1.Connection = conn;
+
+
+          //First increment the UOrderNo of the current user to get the latest order id for current user
+          //To do this we call the stored procedure usp_BeforeInsrtToOrders with current user's userid
+          comm.CommandText = "exec usp_BeforeInsrtToOrders " + ordnsrtIObj.UserId + " ";
+          conn.Open();
+          int rows = comm.ExecuteNonQuery();
+
+
+          //For each item in the BId list we will insert into the Orders table using the stored procedure usp_InsrtOrders  @userId, @bookId, @bookQty
+          //After that delete the record from Cart as it has been purchased
+
+          for (int c = 0; c < ordnsrtIObj.BId.Count; c++)
+          {
+            comm1.CommandText = "exec usp_InsrtOrders " + ordnsrtIObj.UserId + ", " + ordnsrtIObj.BId[c] + ", " + ordnsrtIObj.BQty[c] + " ";
+            comm1.ExecuteNonQuery();
+            CartSQLImpl cartSqlObj = new CartSQLImpl();
+            cartSqlObj.DeleteCartRecord(ordnsrtIObj.UserId, ordnsrtIObj.BId[c]);
+          }
+
+
+          //Sending the Current order details of user 
+          Users usrObj = new Users();
+          UsersSQLImpl usersSqlObj = new UsersSQLImpl();
+          usrObj = usersSqlObj.GetUsrById(ordnsrtIObj.UserId);
+
+          orderList = GetOrdersById(ordnsrtIObj.UserId, usrObj.UOrderNo);
+
         }
-
-
-        //Sending the Current order details of user 
-        Users usrObj = new Users();
-        UsersSQLImpl usersSqlObj = new UsersSQLImpl();
-        usrObj = usersSqlObj.GetUsrById(ordnsrtIObj.UserId);
-
-        orderList = GetOrdersById(ordnsrtIObj.UserId, usrObj.UOrderNo);
-
+        return "Success";
       }
-      return orderList;
+      catch(Exception ex)
+      {
+        return ex.Message;
+      }
+
     }
 
     public List<Orders> GetAllOrders()

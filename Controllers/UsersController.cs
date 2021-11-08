@@ -46,7 +46,7 @@ namespace BookStoreAPI.Controllers
         //}
 
         [HttpPut]
-        public Users Put(int id, Users usrObj)
+        public string Put(int id, Users usrObj)
         {
             return usersSqlObj.UpdateUsr(id, usrObj);
         }

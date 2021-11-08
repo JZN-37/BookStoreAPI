@@ -30,14 +30,14 @@ namespace BookStoreAPI.Controllers
     }
 
     [HttpPost]
-    public UserBankDetails Post(UserBankDetails bankrObj)
+    public string Post(UserBankDetails bankrObj)
     {
 
       return bankSqlObj.AddBankDetails(bankrObj);
     }
 
     [HttpPut]
-    public UserBankDetails Put(int id, UserBankDetails bankrObj)
+    public string Put(int id, UserBankDetails bankrObj)
     {
       return bankSqlObj.UpdateBankDetails(id, bankrObj);
     }
