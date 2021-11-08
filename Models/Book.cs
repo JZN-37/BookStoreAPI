@@ -38,5 +38,11 @@ namespace BookStoreAPI.Models
     public string BCatName { get; set; }
   }
 
+    public class BookWithIdImgPath
+    {
+        public int BId { get; set; }
+        public string BImgPath { get; set; }
+    }
+
 
 }

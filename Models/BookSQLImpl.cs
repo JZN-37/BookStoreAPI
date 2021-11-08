@@ -113,7 +113,39 @@ namespace BookStoreAPI.Models
       return bookList;
     }
 
-    public BookWithCatName GetBookById(int id)
+        public List<BookWithIdImgPath> GetBookByCol(string ColName)
+        {
+            List<BookWithIdImgPath> listBook = new List<BookWithIdImgPath>();
+            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = conn;
+                if (ColName == "BYear")
+                {
+                    comm.CommandText = "select top(5) from Book order by YEAR(BYear) desc";
+                }
+                else
+                if (ColName == "BPosition")
+                {
+                    comm.CommandText = "select top(5) from Book order by BPosition desc";
+                }
+                conn.Open();
+                SqlDataReader dr = comm.ExecuteReader();
+                while (dr.Read())
+                {
+                    BookWithIdImgPath book = new BookWithIdImgPath();
+                    book.BId = Convert.ToInt32(dr["BId"]);
+                    book.BImgPath = dr["BImgPath"].ToString();
+
+                    listBook.Add(book);
+                }
+            }
+            return listBook;
+        }
+
+        public BookWithCatName GetBookById(int id)
     {
       BookWithCatName book = new BookWithCatName();
       string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
@@ -167,6 +199,8 @@ namespace BookStoreAPI.Models
       }
 
     }
+
+
 
     /*public bool UpdateBookCount(int id, int extraBookQty)
     {

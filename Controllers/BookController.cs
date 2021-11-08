@@ -28,6 +28,14 @@ namespace BookStoreAPI.Controllers
       return bookSqlObj.GetBookById(id);
     }
 
+    //https://localhost:44318/api/Book?ColName=BYear
+    //https://localhost:44318/api/Book?ColName=BPosition
+    [HttpGet]
+    public List<BookWithIdImgPath> Get(string ColName)
+    {
+       return bookSqlObj.GetBookByCol(ColName);
+    }
+
     [HttpPost]
     public string Post(Book book)
     {
