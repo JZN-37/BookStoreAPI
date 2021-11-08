@@ -29,9 +29,8 @@ namespace BookStoreAPI.Controllers
     }
 
     [HttpPost]
-    public Book Post(Book book)
+    public string Post(Book book)
     {
-
       return bookSqlObj.AddBook(book);
     }
 
@@ -51,7 +50,7 @@ namespace BookStoreAPI.Controllers
 
 
     [HttpDelete]
-    public bool Delete(int id)
+    public string Delete(int id)
     {
       return bookSqlObj.DeleteBook(id);
     }
