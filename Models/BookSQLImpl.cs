@@ -9,60 +9,71 @@ namespace BookStoreAPI.Models
 {
   public class BookSQLImpl
   {
-    public Book AddBook(Book bookObj)
+    public string AddBook(Book bookObj)
     {
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand comm = new SqlCommand();
+                    //insert into Book values(2,'Born a Crime',978389667,'2020', 14.99, 'Author : Trevor Noah ', 0, 5, 1,'~/Images/Comedy/BornACrime.jpg' , 0)
+                    comm.Connection = conn;
+                    int bookStatus = 0;
+                    if (bookObj.BStatus == true)
+                    {
+                        bookStatus = 1;
+                    }
+                    DateTime YeartoDate = DateTime.Parse("01/01/" + bookObj.BYear);
+                    comm.CommandText = "insert into Book values (" + bookObj.BCatId + " , '" + bookObj.BTitle + "' , '" + bookObj.BISBN + "', '" + YeartoDate + "' , " + bookObj.BPrice + "  , '" + bookObj.BDesc + "' , " + 0 + " , " + bookObj.BCount + " , " + bookStatus + ", '" + bookObj.BImgPath + "', " + 0 + ")";
+                    conn.Open();
 
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
-      using (SqlConnection conn = new SqlConnection(connectionString))
-      {
-        SqlCommand comm = new SqlCommand();
-        //insert into Book values(2,'Born a Crime',978389667,'2020', 14.99, 'Author : Trevor Noah ', 0, 5, 1,'~/Images/Comedy/BornACrime.jpg' , 0)
-        comm.Connection = conn;
-        int bookStatus = 0;
-        if (bookObj.BStatus == true)
-        {
-          bookStatus = 1;
-        }
-        DateTime YeartoDate = DateTime.Parse("01/01/" + bookObj.BYear);
-        comm.CommandText = "insert into Book values (" + bookObj.BCatId + " , '" + bookObj.BTitle + "' , '" + bookObj.BISBN + "', '"+ YeartoDate + "' , " + bookObj.BPrice + "  , '" + bookObj.BDesc + "' , " + 0 + " , " + bookObj.BCount + " , " + bookStatus + ", '" + bookObj.BImgPath + "', " + 0 + ")";
-        conn.Open();
-        //SqlDataReader dr = comm.ExecuteReader();
-        int rows = comm.ExecuteNonQuery();
-        
-
-      }
-      return bookObj;
+                    int rows = comm.ExecuteNonQuery();
+                }
+                return "Success";
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }          
     }
 
-    public bool DeleteBook(int id)
+    public string DeleteBook(int id)
     {
-      BookWithCatName book = GetBookById(id);
-      int rows = 0;
-      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString; 
-      using (SqlConnection conn = new SqlConnection(connectionString))
-      {
-        SqlCommand comm = new SqlCommand();
-        SqlCommand comm1 = new SqlCommand();
-        comm.Connection = conn;
-        comm1.Connection = conn;
-        comm.CommandText = "DELETE FROM Book  WHERE BId= " + id + " ";
-        comm1.CommandText = "exec usp_IDelBk '" + book.BCatId + "' , '" + book.BStatus + "' ";
-        conn.Open();
-        //SqlDataReader dr = comm.ExecuteReader();
-        rows = comm.ExecuteNonQuery();
-        
-        //SqlDataReader dr1 = comm1.ExecuteReader();
-        rows = comm1.ExecuteNonQuery();
-        
-      }
-      if (rows > 0)
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+            try
+            {
+                BookWithCatName book = GetBookById(id);
+                int rows = 0;
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand comm = new SqlCommand();
+                    SqlCommand comm1 = new SqlCommand();
+                    comm.Connection = conn;
+                    comm1.Connection = conn;
+                    comm.CommandText = "DELETE FROM Book  WHERE BId= " + id + " ";
+                    comm1.CommandText = "exec usp_IDelBk '" + book.BCatId + "' , '" + book.BStatus + "' ";
+                    conn.Open();
+                    //SqlDataReader dr = comm.ExecuteReader();
+                    rows = comm.ExecuteNonQuery();
+
+                    //SqlDataReader dr1 = comm1.ExecuteReader();
+                    rows = comm1.ExecuteNonQuery();
+
+                }
+                if (rows > 0)
+                {
+                    return "Book Deleted";
+                }
+                else
+                {
+                    return "No Book Deleted";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
 
     }
 
