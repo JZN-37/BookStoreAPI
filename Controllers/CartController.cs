@@ -19,13 +19,13 @@ namespace BookStoreAPI.Controllers
         }
 
         [HttpGet]
-        public List<Cart> Get()
+        public List<CompleteCart> Get()
         {
             return cartSqlObj.GetAllCart();
         }
 
         [HttpGet]
-        public List<Cart> Get(int id)
+        public List<CompleteCart> Get(int id)
         {
             return cartSqlObj.GetCartById(id);
         }
@@ -44,6 +44,7 @@ namespace BookStoreAPI.Controllers
         }
 
         [HttpDelete]
+        //http://localhost:60494/api/Cart/1?bid=2
         public string Delete(int id,int bid)
         {
             return cartSqlObj.DeleteCartRecord(id,bid);

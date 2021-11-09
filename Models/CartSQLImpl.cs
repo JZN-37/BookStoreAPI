@@ -32,12 +32,11 @@ namespace BookStoreAPI.Models
             }
         }
 
-        //http://localhost:60494/api/Cart/1?bid=2
         public string DeleteCartRecord(int id, int bid) 
         {
             try
             {
-                List<Cart> cartlist = GetCartById(id);
+                List<CompleteCart> cartlist = GetCartById(id);
                 string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
@@ -56,25 +55,31 @@ namespace BookStoreAPI.Models
             }
         }
 
-        public List<Cart> GetAllCart()
+        public List<CompleteCart> GetAllCart()
         {
-            List<Cart> cartList = new List<Cart>();
+            List<CompleteCart> cartList = new List<CompleteCart>();
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select * from Cart";
+                comm.CommandText = "select c.CartId,c.UserId,u.UName,c.BId,b.BTitle,b.BImgPath,b.BPrice,b.BCatId,cat.CatName,c.BQty from Cart c,Users u,Book b,Category cat where c.UserId=u.Id and c.BId=b.BId and b.BCatId=cat.CatId";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read())
                 {
-                    Cart cart = new Cart();
+                    CompleteCart cart = new CompleteCart();
 
                     cart.CartId = Convert.ToInt32(dr["CartId"]);
                     cart.UserId = Convert.ToInt32(dr["UserId"]);
+                    cart.UName = dr["UName"].ToString();
                     cart.BId = Convert.ToInt32(dr["BId"]);
+                    cart.BTitle = dr["BTitle"].ToString();
+                    cart.BImgPath = dr["BImgPath"].ToString();
+                    cart.BPrice = Convert.ToDouble(dr["BPrice"]);
+                    cart.BCatId = Convert.ToInt32(dr["BCatId"]);
+                    cart.CatName = dr["CatName"].ToString();
                     cart.BQty = Convert.ToInt32(dr["BQty"]);
 
                     cartList.Add(cart);
@@ -84,25 +89,31 @@ namespace BookStoreAPI.Models
             return cartList;
         }
 
-        public List<Cart> GetCartById(int id)
+        public List<CompleteCart> GetCartById(int id)
         {
-            List<Cart> cartList = new List<Cart>();
+            List<CompleteCart> cartList = new List<CompleteCart>();
             
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select * from Cart where UserId =" + id + " ";
+                comm.CommandText = "select c.CartId,c.UserId,u.UName,c.BId,b.BTitle,b.BImgPath,b.BPrice,b.BCatId,cat.CatName,c.BQty from Cart c,Users u,Book b,Category cat where c.UserId=u.Id and c.BId=b.BId and b.BCatId=cat.CatId and c.UserId =" + id + " ";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read())
                 {
-                    Cart cart = new Cart();
+                    CompleteCart cart = new CompleteCart();
 
                     cart.CartId = Convert.ToInt32(dr["CartId"]);
                     cart.UserId = Convert.ToInt32(dr["UserId"]);
+                    cart.UName = dr["UName"].ToString();
                     cart.BId = Convert.ToInt32(dr["BId"]);
+                    cart.BTitle = dr["BTitle"].ToString();
+                    cart.BImgPath = dr["BImgPath"].ToString();
+                    cart.BPrice = Convert.ToDouble(dr["BPrice"]);
+                    cart.BCatId = Convert.ToInt32(dr["BCatId"]);
+                    cart.CatName = dr["CatName"].ToString();
                     cart.BQty = Convert.ToInt32(dr["BQty"]);
 
                     cartList.Add(cart);
