@@ -134,7 +134,7 @@ namespace BookStoreAPI.Models
                     SqlCommand comm = new SqlCommand();
                     comm.Connection = conn;
 
-                    comm.CommandText = "UPDATE Cart SET BQty=" + cartObj.BQty + " WHERE UserId =" + id + " and BId = " + cartObj.BId + " ";
+                    comm.CommandText = "UPDATE Cart SET BQty=" + cartObj.BQty + " WHERE CartId =" + id + " ";
                     conn.Open();
                     int rows = comm.ExecuteNonQuery();
 
