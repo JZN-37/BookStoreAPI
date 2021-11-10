@@ -103,6 +103,7 @@ namespace BookStoreAPI.Models
           book.BPosition = Convert.ToDouble(dr["BPosition"]);
           book.BCount = Convert.ToInt32(dr["BCount"]);
           book.BStatus = Convert.ToBoolean(dr["BStatus"]);
+          book.CatStatus = Convert.ToBoolean(dr["CatStatus"]);
           book.BImgPath = dr["BImgPath"].ToString();
           book.Norders = Convert.ToInt32(dr["Norders"]);
           book.BCatName = dr["CatName"].ToString();
@@ -168,6 +169,7 @@ namespace BookStoreAPI.Models
           book.BPosition = Convert.ToDouble(dr["BPosition"]);
           book.BCount = Convert.ToInt32(dr["BCount"]);
           book.BStatus = Convert.ToBoolean(dr["BStatus"]);
+          book.CatStatus = Convert.ToBoolean(dr["CatStatus"]);
           book.BImgPath = dr["BImgPath"].ToString();
           book.Norders = Convert.ToInt32(dr["Norders"]);
           book.BCatName = dr["CatName"].ToString();
