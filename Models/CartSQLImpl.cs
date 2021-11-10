@@ -64,7 +64,7 @@ namespace BookStoreAPI.Models
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select c.CartId,c.UserId,u.UName,c.BId,b.BTitle,b.BImgPath,b.BPrice,b.BCatId,cat.CatName,c.BQty from Cart c,Users u,Book b,Category cat where c.UserId=u.Id and c.BId=b.BId and b.BCatId=cat.CatId";
+                comm.CommandText = "select c.CartId,c.UserId,u.UName,c.BId,b.BTitle,b.BImgPath,b.BPrice,b.BCatId,cat.CatName,c.BQty,b.BStatus,cat.CatStatus from Cart c,Users u,Book b,Category cat where c.UserId=u.Id and c.BId=b.BId and b.BCatId=cat.CatId";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read())
@@ -81,6 +81,8 @@ namespace BookStoreAPI.Models
                     cart.BCatId = Convert.ToInt32(dr["BCatId"]);
                     cart.CatName = dr["CatName"].ToString();
                     cart.BQty = Convert.ToInt32(dr["BQty"]);
+                    cart.BStatus = Convert.ToBoolean(dr["BStatus"]);
+                    cart.CatStatus = Convert.ToBoolean(dr["CatStatus"]);
 
                     cartList.Add(cart);
                 }
@@ -98,7 +100,7 @@ namespace BookStoreAPI.Models
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select c.CartId,c.UserId,u.UName,c.BId,b.BTitle,b.BImgPath,b.BPrice,b.BCatId,cat.CatName,c.BQty from Cart c,Users u,Book b,Category cat where c.UserId=u.Id and c.BId=b.BId and b.BCatId=cat.CatId and c.UserId =" + id + " ";
+                comm.CommandText = "select c.CartId,c.UserId,u.UName,c.BId,b.BTitle,b.BImgPath,b.BPrice,b.BCatId,cat.CatName,c.BQty,b.BStatus,cat.CatStatus from Cart c,Users u,Book b,Category cat where c.UserId=u.Id and c.BId=b.BId and b.BCatId=cat.CatId and c.UserId =" + id + " ";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read())
@@ -115,6 +117,8 @@ namespace BookStoreAPI.Models
                     cart.BCatId = Convert.ToInt32(dr["BCatId"]);
                     cart.CatName = dr["CatName"].ToString();
                     cart.BQty = Convert.ToInt32(dr["BQty"]);
+                    cart.BStatus = Convert.ToBoolean(dr["BStatus"]);
+                    cart.CatStatus = Convert.ToBoolean(dr["CatStatus"]);
 
                     cartList.Add(cart);
                 }

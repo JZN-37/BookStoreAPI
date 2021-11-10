@@ -25,5 +25,7 @@ namespace BookStoreAPI.Models
         public int BCatId { get; set; }
         public string CatName { get; set; }
         public int BQty { get; set; }
+        public bool BStatus { get; set; }
+        public bool CatStatus { get; set; }
     }
 }
