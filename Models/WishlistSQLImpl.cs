@@ -32,41 +32,55 @@ namespace BookStoreAPI.Models
 
         }
 
-        public List<Wishlist> DeleteWish(int id, int bid)
+        public string DeleteWish(int id, int bid)
         {
-            List<Wishlist> wishlist = GetWishById(id);
-            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
-                comm.CommandText = "DELETE FROM Wishlist  WHERE UserId = " + id + " and BId=" + bid + "";
-                conn.Open();
-                int rows = comm.ExecuteNonQuery();
+                List<Completewishlist> wishlist = GetWishById(id);
+                string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand comm = new SqlCommand();
+                    comm.Connection = conn;
+                    comm.CommandText = "DELETE FROM Wishlist  WHERE UserId = " + id + " and BId=" + bid + "";
+                    conn.Open();
+                    int rows = comm.ExecuteNonQuery();
 
+                }
+                return "Success";
             }
-            return wishlist;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
-        public List<Wishlist> GetAllWish()
+        public List<Completewishlist> GetAllWish()
         {
-            List<Wishlist> wishList = new List<Wishlist>();
+            List<Completewishlist> wishList = new List<Completewishlist>();
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select * from Wishlist";
+                comm.CommandText = "select * from Wishlist w,Users u,Book b,Category cat where w.UserId=u.Id and w.BId=b.BId and b.BCatId=cat.CatId and b.BStatus=1";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read())
                 {
-                    Wishlist wish = new Wishlist();
+                    Completewishlist wish = new Completewishlist();
 
                     wish.WId = Convert.ToInt32(dr["WId"]);
                     wish.UserId = Convert.ToInt32(dr["UserId"]);
+                    wish.UName = dr["UName"].ToString();
                     wish.BId = Convert.ToInt32(dr["BId"]);
+                    wish.BTitle = dr["BTitle"].ToString();
+                    wish.BImgPath = dr["BImgPath"].ToString();
+                    wish.BPrice = Convert.ToDouble(dr["BPrice"]);
+                    wish.BCatId = Convert.ToInt32(dr["BCatId"]);
+                    wish.BCount = Convert.ToInt32(dr["BCount"]);
+                    wish.CatName = dr["CatName"].ToString();
 
                     wishList.Add(wish);
                 }
@@ -74,25 +88,32 @@ namespace BookStoreAPI.Models
             return wishList;
         }
 
-        public List<Wishlist> GetWishById(int id)
+        public List<Completewishlist> GetWishById(int id)
         {
-            List<Wishlist> wishList = new List<Wishlist>();
+            List<Completewishlist> wishList = new List<Completewishlist>();
 
             string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select * from Wishlist where UserId =" + id + " ";
+                comm.CommandText = "select * from Wishlist w,Users u,Book b,Category cat where w.UserId=u.Id and w.BId=b.BId and b.BCatId=cat.CatId and b.BStatus=1 and w.UserId =" + id + " ";
                 conn.Open();
                 SqlDataReader dr = comm.ExecuteReader();
                 while (dr.Read())
                 {
-                    Wishlist wish = new Wishlist();
+                    Completewishlist wish = new Completewishlist();
 
                     wish.WId = Convert.ToInt32(dr["WId"]);
                     wish.UserId = Convert.ToInt32(dr["UserId"]);
+                    wish.UName = dr["UName"].ToString();
                     wish.BId = Convert.ToInt32(dr["BId"]);
+                    wish.BTitle = dr["BTitle"].ToString();
+                    wish.BImgPath = dr["BImgPath"].ToString();
+                    wish.BPrice = Convert.ToDouble(dr["BPrice"]);
+                    wish.BCatId = Convert.ToInt32(dr["BCatId"]);
+                    wish.BCount = Convert.ToInt32(dr["BCount"]);
+                    wish.CatName = dr["CatName"].ToString();
 
                     wishList.Add(wish);
                 }

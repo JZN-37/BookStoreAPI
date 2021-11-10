@@ -19,15 +19,13 @@ namespace BookStoreAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public List<Wishlist> Get()
+        public List<Completewishlist> Get()
         {
             return wishSqlObj.GetAllWish();
         }
 
         [HttpGet]
-        [Authorize]
-        public List<Wishlist> Get(int id)
+        public List<Completewishlist> Get(int id)
         {
             return wishSqlObj.GetWishById(id);
         }
@@ -46,7 +44,7 @@ namespace BookStoreAPI.Controllers
         //}
 
         [HttpDelete]
-        public List<Wishlist> Delete(int id, int bid)
+        public string Delete(int id, int bid)
         {
             return wishSqlObj.DeleteWish(id, bid);
         }
