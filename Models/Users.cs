@@ -5,6 +5,18 @@ using System.Web;
 
 namespace BookStoreAPI.Models
 {
+    public class UserRole
+  {
+    public string Role { get; set; }
+    public int Id { get; set; }
+    public string UName { get; set; }
+    public string UPwd { get; set; }
+    public string UMobile { get; set; }
+    public string UEmail { get; set; }
+    public bool UStatus { get; set; }
+    public int UOrderNo { get; set; }
+  }
+
     public class Users
     {
       public int Id { get; set; }

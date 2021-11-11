@@ -132,6 +132,36 @@ namespace BookStoreAPI.Models
           return userId;
         }
 
+        public List<UserRole> GetUserRoles()
+    {
+      List<UserRole> usrList = new List<UserRole>();
+      string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+
+      using (SqlConnection conn = new SqlConnection(connectionString))
+      {
+        SqlCommand comm = new SqlCommand();
+        comm.Connection = conn;
+        comm.CommandText = "select Roles.Name 'Role',Users.Id, Users.UName, Users.UPwd,Users.UMobile, Users.UEmail, Users.UStatus, Users.UOrderNo   from [UserDB].[dbo].[Role] Roles, [UserDB].[dbo].[UserRole] UserRole , [BookStoreApp].[dbo].[Users] Users, [UserDB].[dbo].[User] UserDBUser where Users.Id=UserDBUser.UserID and UserDBUser.Id=UserRole.UserId and UserRole.RoleId=Roles.Id order by Users.Id asc";
+        conn.Open();
+        SqlDataReader dr = comm.ExecuteReader();
+        while (dr.Read())
+        {
+          UserRole usr = new UserRole();
+          usr.Role = dr["Role"].ToString();
+          usr.Id = Convert.ToInt32(dr["Id"]);
+          usr.UName = dr["UName"].ToString();
+          usr.UPwd = dr["UPwd"].ToString();
+          usr.UMobile = dr["UMobile"].ToString();
+          usr.UEmail = dr["UEmail"].ToString();
+          usr.UStatus = Convert.ToBoolean(dr["UStatus"]);
+          usr.UOrderNo = Convert.ToInt32(dr["UOrderNo"]);
+
+          usrList.Add(usr);
+        }
+      }
+      return usrList;
+    }
+
         public string UpdateUsr(int id, Users usrObj)
         {
           try

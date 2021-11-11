@@ -37,6 +37,13 @@ namespace BookStoreAPI.Controllers
           return usersSqlObj.GetUIdByUName(userName);
         }
 
+        [HttpGet]
+      //http://localhost:60494/api/Users?withRole=true
+      public List<UserRole> Get(bool withRole)
+        {
+          return usersSqlObj.GetUserRoles();
+        }
+
         ////Called Only From AccountController
         //[HttpPost]
         //public Users Post(Users usrObj)
