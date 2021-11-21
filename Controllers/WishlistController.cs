@@ -19,6 +19,7 @@ namespace BookStoreAPI.Controllers
         }
 
         [HttpGet]
+        //[Authorize(Roles ="User")]
         public List<Completewishlist> Get()
         {
             return wishSqlObj.GetAllWish();

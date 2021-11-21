@@ -1,4 +1,4 @@
-﻿using BookStoreAPI.Models;
+using BookStoreAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,13 @@ namespace BookStoreAPI.Controllers
             return discSqlObj.GetDiscById(id);
         }
 
-        [HttpPost]
+        [HttpGet]
+        public double GetByCode(string couponCode)
+        {
+          return discSqlObj.GetDiscByCode(couponCode);
+        }
+
+    [HttpPost]
         public string Post(Discount discObj)
         {
 

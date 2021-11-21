@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -110,6 +110,26 @@ namespace BookStoreAPI.Models
             }
             return disc;
         }
+
+        public double GetDiscByCode(string couponCode)
+        {
+            double discValue = 0;
+            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+              SqlCommand comm = new SqlCommand();
+              comm.Connection = conn;
+              comm.CommandText = "select DDiscountValue from Discount where DCouponCode = '" + couponCode + "' ";
+              conn.Open();
+              SqlDataReader dr = comm.ExecuteReader();
+              while (dr.Read())
+              {
+                discValue = Convert.ToDouble(dr["DDiscountValue"]);
+              }
+            }
+
+      return discValue;
+    }
 
 
         public string UpdateDisc(int id, Discount discObj)
